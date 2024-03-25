@@ -1,14 +1,20 @@
 {
   "name": "h2vl",
   "version": "0.0.1",
-  "author":  "Heyner Cuevas",
-  "email": "heyner128@gmail.com",
+  "private": true,
   "description": "H2LV.fr page",
-  "private" : true,
-  "directories": {
-    "test": "tests"
-  },
+  "author": "Heyner Cuevas",
+  "workspaces": [
+    "client",
+    "cms"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run build --workspace=client && npm run build --workspace=cms",
+    "dev": "concurrently \"npm run dev --workspace=client\" \"npm run develop --workspace=cms\"",
+    "start": "concurrently \"npm run start --workspace=client\" \"npm run start --workspace=cms\""
   },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "email": "me@heyner.me"
 }

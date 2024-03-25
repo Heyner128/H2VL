@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "articles",
+  "info": {
+    "singularName": "article",
+    "pluralName": "articles",
+    "displayName": "Article",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Titre": {
+      "type": "string",
+      "required": true
+    },
+    "Description": {
+      "type": "text",
+      "required": true
+    },
+    "Image": {
+      "type": "media",
+      "multiple": true,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "Etiquette": {
+      "type": "enumeration",
+      "enum": [
+        "Actualité",
+        "Evènement",
+        "Article"
+      ],
+      "required": true,
+      "default": "Article"
+    },
+    "Contenu": {
+      "type": "richtext",
+      "required": true
+    }
+  }
+}
