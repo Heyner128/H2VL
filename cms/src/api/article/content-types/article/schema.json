@@ -12,35 +12,43 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "Titre": {
+    "titre": {
       "type": "string",
       "required": true
     },
-    "Description": {
-      "type": "text",
+    "description": {
+      "type": "string",
       "required": true
     },
-    "Image": {
+    "image": {
       "type": "media",
-      "multiple": true,
+      "multiple": false,
       "required": true,
       "allowedTypes": [
         "images"
       ]
     },
-    "Etiquette": {
+    "pieces_jointes": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
+    },
+    "contenu": {
+      "type": "richtext",
+      "required": true
+    },
+    "etiquette": {
       "type": "enumeration",
       "enum": [
         "Actualité",
         "Evènement",
         "Article"
-      ],
-      "required": true,
-      "default": "Article"
-    },
-    "Contenu": {
-      "type": "richtext",
-      "required": true
+      ]
     }
   }
 }
