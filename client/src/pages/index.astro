@@ -1,7 +1,6 @@
 ---
-
-import fetchApi from '../lib/strapi';
-import type Article from '../interfaces/article';
+import fetchApi from '@/lib/strapi';
+import type Article from '@/interfaces/article';
 
 const articles = await fetchApi<Article[]>({
   endpoint: 'articles', 
@@ -10,7 +9,7 @@ const articles = await fetchApi<Article[]>({
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <title>Strapi & Astro</title>
   </head>
@@ -21,7 +20,7 @@ const articles = await fetchApi<Article[]>({
         {
           articles.map((article) => (
             <li>
-              <a href={`/blog/${article.attributes.slug}/`}>
+              <a href={`/blog/${article.id}/`}>
                 {article.attributes.titre}
               </a>
             </li>

@@ -1,6 +1,6 @@
 ---
-import fetchApi from '../../lib/strapi';
-import type Article from '../../interfaces/article';
+import fetchApi from '@/lib//strapi';
+import type Article from '@/interfaces/article';
 
 export async function getStaticPaths() {
   const articles = await fetchApi<Article[]>({
@@ -9,7 +9,7 @@ export async function getStaticPaths() {
   });
 
   return articles.map((article) => ({
-    params: { slug: article.attributes.slug },
+    params: { id: article.id },
     props: article,
   }));
 }
@@ -26,7 +26,7 @@ const article = Astro.props;
 
   <body>
     <main>
-      <img src={import.meta.env.STRAPI_URL + article.attributes.image.data.attributes.url} />
+      <!-- <img src={import.meta.env.STRAPI_URL + article.attributes.image.data.attributes.url} /> -->
 
       <h1>{article.attributes.titre}</h1>
       {article.attributes.contenu}
