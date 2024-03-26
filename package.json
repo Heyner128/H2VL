@@ -9,9 +9,9 @@
     "cms"
   ],
   "scripts": {
-    "build": "npm run build --workspace=client && npm run build --workspace=cms",
-    "dev": "concurrently \"npm run dev --workspace=client\" \"npm run dev --workspace=cms\"",
-    "start": "concurrently \"npm run start --workspace=client\" \"npm run start --workspace=cms\""
+    "build": "npm run build --workspace=cms && npm run build --workspace=client",
+    "dev": "concurrently \"npm run dev --workspace=cms\" \"npm run dev --workspace=client\"",
+    "start": "concurrently \"npm run start --workspace=cms\" \"npm run start --workspace=client\""
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

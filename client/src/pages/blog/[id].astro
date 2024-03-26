@@ -5,6 +5,9 @@ import type Article from '@/interfaces/article';
 export async function getStaticPaths() {
   const articles = await fetchApi<Article[]>({
     endpoint: 'articles',
+    query: {
+      populate: '*'
+    },
     wrappedByKey: 'data',
   });
 
@@ -15,21 +18,24 @@ export async function getStaticPaths() {
 }
 type Props = Article;
 
-const article = Astro.props;
+const article: Props = Astro.props;
+
+console.log(article)
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <title>{article.attributes.titre}</title>
   </head>
 
   <body>
     <main>
-      <!-- <img src={import.meta.env.STRAPI_URL + article.attributes.image.data.attributes.url} /> -->
-
       <h1>{article.attributes.titre}</h1>
-      {article.attributes.contenu}
+      <img src={import.meta.env.STRAPI_URL + article.attributes.image.data.attributes.url} />
+
+
+      <p>{article.attributes.contenu}</p>
     </main>
   </body>
 </html>
