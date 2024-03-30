@@ -1,6 +1,15 @@
-import type { ApiArticleArticle } from "@strapi-types";
-
 export default interface Article {
   id: Number;
-  attributes: ApiArticleArticle["attributes"];
+  attributes: {
+    titre: String;
+    contenu: String;
+    description: string;
+    image: {
+      data: {
+        attributes: {
+          url: String;
+        }
+      }
+    };
+  }
 }

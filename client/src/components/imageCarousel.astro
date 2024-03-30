@@ -1,0 +1,62 @@
+---
+import Image from "astro/components/Image.astro";
+
+const { articles } = Astro.props;
+---
+<script>
+    let activeImage = 1;
+    const scrollWrapper = document.querySelector("#carousel-scroll-wrapper");
+    const offsetSizeInDvw = 90;
+
+    const changeImageTo = (index: Number) => {
+        if("style" in scrollWrapper) scrollWrapper.style.left = `-${(index-1)*offsetSizeInDvw}dvw`;
+    }
+
+    const highlightButton = (index) => {
+        document.querySelector(`#carousel-button-${index}`).classList.toggle("font-bold");
+    }
+
+    const buttonClickHandler:EventListener = (event: Event) => {
+        if("innerText" in event.currentTarget) {
+            const buttonNumber = Number(event.currentTarget.innerText)
+            changeImageTo(buttonNumber);
+            highlightButton(activeImage);
+            activeImage = buttonNumber;
+            highlightButton(activeImage);
+        }
+
+    }
+
+    document.querySelectorAll(".carousel-button")
+        .forEach(button => button.addEventListener("click", buttonClickHandler))
+
+    highlightButton(activeImage);
+</script>
+<section class="self-center flex flex-col gap-2 relative w-[90dvw] overflow-hidden h-[40dvh]">
+    <div id="carousel-scroll-wrapper" class="absolute h-[85%] flex top-0">
+        {
+            articles.slice(0,5).map(article => (
+                <div class="flex flex-col justify-center gap-2 w-[90dvw] h-full">
+                    <Image
+                        src={import.meta.env.STRAPI_URL + article.attributes.image.data.attributes.url}
+                        alt={"Image article " + article.attributes.titre} class="object-none h-2/3"
+                        inferSize
+                    />
+                    <span class="font-bold text-lg">{article.attributes.titre}</span>
+                    <span>{article.attributes.description}</span>
+                </div>
+            ))
+        }
+    </div>
+    <div class="absolute bottom-0 mb-3 self-end flex gap-5">
+        {
+            [1, 2, 3, 4, 5].map(index => (
+                <button
+                    id={`carousel-button-${index}`}
+                    class="carousel-button"
+                    title={`Voir article numéro ${index}`}
+                >{index}</button>
+            ))
+        }
+    </div>
+</section>

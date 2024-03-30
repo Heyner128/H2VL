@@ -1,0 +1,43 @@
+<script>
+    const navMenuClickHandler = (event: Event) => {
+        event.preventDefault();
+        const menuInput = document.querySelector("#menustate")
+        if(menuInput !== null && "checked" in menuInput) menuInput.checked = !menuInput.checked
+    }
+    document.querySelector("#nav-menu-open")?.addEventListener('click', navMenuClickHandler);
+    document.querySelector("#nav-menu-close")?.addEventListener('click', navMenuClickHandler);
+</script>
+
+<nav class="relative">
+    <input aria-hidden="true" type="checkbox" id="menustate" class="hidden peer"/>
+    <label for="menustate" class="group text-right text-4xl md:hidden" >
+        <a
+                id="nav-menu-open"
+                role="button"
+                href="#menustate"
+                class="peer-checked:group-[]:hidden peer-target:group-[]:hidden"
+        >
+            <span aria-hidden="true">≡</span>
+            <span class="sr-only">Ouvrir ménu</span>
+        </a>
+        <a
+                id="nav-menu-close"
+                role="button"
+                href="#"
+                class="hidden peer-checked:group-[]:block peer-target:group-[]:block"
+
+        >
+            <span aria-hidden="true">×</span>
+            <span class="sr-only">Fermer ménu</span>
+        </a>
+    </label>
+    <div class="max-md:hidden max-md:absolute
+     max-md:h-dvh max-md:w-dvw max-md:right-0 max-md:peer-checked:block max-md:peer-target:block max-md:bg-black max-md:bg-opacity-35 max-md:-me-3 max-md:mt-3">
+        <ul class="max-md:absolute max-md:right-0 flex max-md:flex-col max-md:gap-4 md:gap-10 max-md:bg-blue-500 max-md:h-dvh max-md:w-[50dvw] max-md:text-center max-md:pt-3">
+            <li class={Astro.url.pathname === "/"?"font-bold":""}><a href="/">Accueil</a></li>
+            <li>L&apos;association</li>
+            <li class={Astro.url.pathname.includes("blog")?"font-bold":""}>Actualités</li>
+            <li>Contact</li>
+        </ul>
+    </div>
+</nav>

@@ -9,12 +9,7 @@
     "cms"
   ],
   "scripts": {
-    "build": "npm run build --workspace=cms && npm run build --workspace=client",
-    "dev": "concurrently \"npm run dev --workspace=cms\" \"npm run dev --workspace=client\"",
-    "start": "concurrently \"npm run start --workspace=cms\" \"npm run start --workspace=client\""
-  },
-  "devDependencies": {
-    "concurrently": "^8.2.2"
+    "build": "npm run build --workspace=cms && npm run build --workspace=client"
   },
   "email": "me@heyner.me"
 }

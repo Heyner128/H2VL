@@ -1,32 +1,31 @@
 ---
 import fetchApi from '@/lib/strapi';
+import BaseLayout from "@/layout/baseLayout.astro";
 import type Article from '@/interfaces/article';
+import ImageCarousel from "../components/imageCarousel.astro";
+
 
 const articles = await fetchApi<Article[]>({
-  endpoint: 'articles', 
-  wrappedByKey: 'data', 
+  endpoint: 'articles',
+  wrappedByKey: 'data',
+  query: {
+    populate: "*"
+  }
 });
+
 ---
 
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <title>Strapi & Astro</title>
-  </head>
-
-  <body>
-    <main>
-      <ul>
-        {
-          articles.map((article) => (
-            <li>
-              <a href={`/blog/${article.id}/`}>
-                {article.attributes.titre}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </main>
-  </body>
-</html>
+<BaseLayout>
+  <ImageCarousel articles={articles} />
+  <ul>
+    {
+      articles.map((article) => (
+        <li>
+          <a href={`/blog/${article.id}/`}>
+            {article.attributes.titre}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>

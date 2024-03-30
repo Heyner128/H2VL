@@ -1,3 +1,5 @@
+import axios from "axios";
+
 interface Props {
   endpoint: string;
   query?: Record<string, string>;
@@ -30,20 +32,18 @@ export default async function fetchApi<T>({
       url.searchParams.append(key, value);
     });
   }
-  const res = await fetch(url.toString(), {
+  const res = await axios.get(url.toString(), {
     headers: {
       Authorization: `Bearer ${import.meta.env.STRAPI_API_TOKEN}`,
     },
   });
-  let data = await res.json();
-
+  let data = res.data;
   if (wrappedByKey) {
     data = data[wrappedByKey];
   }
-
   if (wrappedByList) {
     data = data[0];
   }
-
   return data as T;
+
 }
