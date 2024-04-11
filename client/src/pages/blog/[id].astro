@@ -21,7 +21,7 @@ export async function getStaticPaths() {
 const article: Article = Astro.props;
 ---
 
-<BaseLayout>
+<BaseLayout title="Actualités - H2VL">
     <h1>{article.attributes.titre}</h1>
     <Image src={import.meta.env.STRAPI_URL + article.attributes.image.data.attributes.url} alt={"Image article " + article.attributes.titre} inferSize />
 

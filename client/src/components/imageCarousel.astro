@@ -1,62 +1,101 @@
 ---
 import Image from "astro/components/Image.astro";
 
-const { articles } = Astro.props;
+const { articles, maxArticles } = Astro.props;
+
+const ARTICLES_TO_SHOW = Math.min(maxArticles, articles.length);
+
 ---
 <script>
     let activeImage = 1;
     const scrollWrapper = document.querySelector("#carousel-scroll-wrapper");
-    const offsetSizeInDvw = 90;
+
 
     const changeImageTo = (index: Number) => {
-        if("style" in scrollWrapper) scrollWrapper.style.left = `-${(index-1)*offsetSizeInDvw}dvw`;
+        if("style" in scrollWrapper) scrollWrapper.style.left = `-${(index-1)*100}dvw`;
     }
 
     const highlightButton = (index) => {
-        document.querySelector(`#carousel-button-${index}`).classList.toggle("font-bold");
+        document.querySelector(`#carousel-number-button-${index}`).classList.toggle("font-bold");
     }
 
-    const buttonClickHandler:EventListener = (event: Event) => {
+    const changeElementTo = (index) => {
+        changeImageTo(index);
+        highlightButton(activeImage);
+        activeImage = index;
+        highlightButton(activeImage);
+    }
+
+    const numberButtonClickHandler:EventListener = (event: Event) => {
         if("innerText" in event.currentTarget) {
             const buttonNumber = Number(event.currentTarget.innerText)
-            changeImageTo(buttonNumber);
-            highlightButton(activeImage);
-            activeImage = buttonNumber;
-            highlightButton(activeImage);
+            changeElementTo(buttonNumber);
         }
-
     }
 
-    document.querySelectorAll(".carousel-button")
-        .forEach(button => button.addEventListener("click", buttonClickHandler))
+    const numberButtons = Array.from(document.querySelectorAll(".carousel-number-button"));
+    numberButtons.forEach(button => button.addEventListener("click", numberButtonClickHandler));
+
+    const ARTICLES_TO_SHOW = numberButtons.length;
+
+    const beforeButtonClickHandler = () => {
+        changeElementTo((activeImage-1)<1?ARTICLES_TO_SHOW:activeImage-1);
+    }
+
+    const beforeButton = document.querySelector("#carousel-button-before");
+
+    beforeButton.addEventListener("click", beforeButtonClickHandler)
+
+    const nextButtonClickHandler = () => {
+        changeElementTo((activeImage+1)>ARTICLES_TO_SHOW?1:activeImage+1);
+    }
+
+    const nextButton = document.querySelector("#carousel-button-next");
+
+    nextButton.addEventListener("click", nextButtonClickHandler)
+
+    setInterval(() => nextButtonClickHandler(), 5000);
 
     highlightButton(activeImage);
 </script>
-<section class="self-center flex flex-col gap-2 relative w-[90dvw] overflow-hidden h-[40dvh]">
-    <div id="carousel-scroll-wrapper" class="absolute h-[85%] flex top-0">
+<section class="flex flex-col gap-2 overflow-hidden h-[50dvh] w-full max-w-[2000px]">
+    <div id="carousel-contents" class="relative flex-grow">
+        <div id="carousel-scroll-wrapper" class="absolute h-full flex top-0 transition-[left] ease-in-out delay-150">
         {
-            articles.slice(0,5).map(article => (
-                <div class="flex flex-col justify-center gap-2 w-[90dvw] h-full">
+            articles.slice(0,ARTICLES_TO_SHOW).map(article => (
+                <div class="flex max-lg:flex-col gap-5 w-[100dvw] h-full px-7 pt-7">
                     <Image
                         src={import.meta.env.STRAPI_URL + article.attributes.image.data.attributes.url}
-                        alt={"Image article " + article.attributes.titre} class="object-none h-2/3"
+                        alt={"Image article " + article.attributes.titre} class="object-cover h-5/6 max-lg:h-1/2 self-center"
                         inferSize
                     />
-                    <span class="font-bold text-lg">{article.attributes.titre}</span>
-                    <span>{article.attributes.description}</span>
+                    <div class="flex flex-col gap-2 self-center ">
+                        <span class="font-bold text-2xl">{article.attributes.titre}</span>
+                        <span class="text-lg">{article.attributes.description}</span>
+                        <a href={`/blog/${article.id}`}><span class="text-blue-500 underline">Voir l&apos;article</span></a>
+                    </div>
                 </div>
             ))
         }
     </div>
-    <div class="absolute bottom-0 mb-3 self-end flex gap-5">
+    </div>
+    <div class="self-end flex gap-5 px-7 pb-7">
+        <button
+            id="carousel-button-before"
+            title="Voir l'article précedent"
+        >◀</button>
         {
-            [1, 2, 3, 4, 5].map(index => (
+            Array.from({ length: ARTICLES_TO_SHOW }, (_, i) => 1 + i).map(index => (
                 <button
-                    id={`carousel-button-${index}`}
-                    class="carousel-button"
+                    id={`carousel-number-button-${index}`}
+                    class="carousel-number-button"
                     title={`Voir article numéro ${index}`}
                 >{index}</button>
             ))
         }
+        <button
+            id="carousel-button-next"
+            title="Voir l'article suivant"
+        >▶</button>
     </div>
 </section>

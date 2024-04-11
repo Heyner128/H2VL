@@ -3,7 +3,9 @@ export default interface Article {
   attributes: {
     titre: String;
     contenu: String;
-    description: string;
+    description: String;
+    createdAt: String;
+    etiquette: String;
     image: {
       data: {
         attributes: {

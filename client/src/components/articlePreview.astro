@@ -1,0 +1,45 @@
+---
+import Article from "@/interfaces/article";
+import Image from "astro/components/Image.astro";
+const {article}: Article = Astro.props;
+---
+<a href={`/blog/${article.id}`} title={`Voir l'article numéro ${article.id}`} tabindex="0">
+    <article class="flex flex-col gap-8">
+        <span class="text-xl font-bold">{article.attributes.titre}</span>
+        <Image
+                src={import.meta.env.STRAPI_URL + article.attributes.image.data.attributes.url}
+                alt={"Image article " + article.attributes.titre}
+                inferSize
+        />
+        <div class="flex justify-between">
+            <span class="italic">{
+                new Date(article.attributes.createdAt)
+                    .toLocaleDateString(
+                        "fr-FR",
+                        {
+                            year: "numeric",
+                            month: "numeric",
+                            day: "numeric",
+                            hour: "numeric",
+                            minute: "numeric"
+                        }
+                    )
+            }</span>
+            <span class={`font-bold px-3 py-0.5 rounded-full ${
+                (() => {
+                    switch (article.attributes.etiquette) {
+                        case "Actualité":
+                            return "bg-green-900 text-white";
+                        case "Evènement":
+                            return "bg-amber-800 text-white";
+                        case "Article":
+                            return "bg-red-500 text-white";
+                        default:
+                            return "bg-blue-500 text-white";
+                    }
+                })()
+            }`}>{article.attributes.etiquette}</span>
+        </div>
+        <p class="text-justify">{article.attributes.description}</p>
+    </article>
+</a>

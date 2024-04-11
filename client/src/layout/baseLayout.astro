@@ -1,7 +1,22 @@
 ---
 import logoReference from "../../public/logo.svg";
-import iconReference from "../../public/favicon.png";
 import NavigationBar from "../components/navigationBar.astro";
+
+import ContactInformation from "@/interfaces/contactInformation";
+import fetchApi from "../lib/strapi";
+
+
+const contactInformation = await fetchApi<ContactInformation>(
+    {
+        endpoint: 'coordonnees',
+        wrappedByKey: 'data',
+        query: {
+            populate: "*"
+        }
+    }
+)
+
+const { title }  = Astro.props || {};
 ---
 <!DOCTYPE html>
 <html lang="fr-FR">
@@ -14,18 +29,37 @@ import NavigationBar from "../components/navigationBar.astro";
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32">
         <link rel="apple-touch-icon" href="/favicon.png" type="image/png" sizes="32x32">
-        <title>Handicap Visuel Val de Loire</title>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+        <title>{title??"Handicap Visuel Val de Loire"}</title>
     </head>
     <body>
-        <header class="h-16 flex justify-between align-middle bg-blue-500 text-white sticky top-0 px-3 items-center z-50">
+        <header class="h-16 flex justify-between align-middle bg-blue-500 text-white sticky top-0 px-5 items-center z-50">
 
-            <a class="h-full" href="/"><img class="h-full py-3" src={logoReference.src} alt="logo" /> </a>
+            <a class="h-full w-auto" href="/">
+                <div class="flex gap-4">
+                    <img class="h-16 py-3" src={logoReference.src} alt="logo" />
+                    <span class="font-bold self-center">Handicap Visuel Val de Loire</span>
+                </div>
+            </a>
             <NavigationBar />
         </header>
-        <main class="p-7 flex flex-col gap-8 z-10">
+        <main class="z-10 min-h-[80dvh]">
             <slot />
         </main>
-        <footer>
+        <footer class="flex w-full justify-center bg-blue-500 text-white">
+            <div class="flex justify-between w-full p-7 max-w-[2000px]">
+                <div class="flex flex-col gap-7">
+                    <span class="text-2xl font-bold">Contact</span>
+                    <div class="flex flex-col gap-1">
+                        <span>{contactInformation.attributes.adresse}</span>
+                        <span>{contactInformation.attributes.code_postal} {contactInformation.attributes.ville.toUpperCase()}</span>
+                        <span>{contactInformation.attributes.numero_telephone}</span>
+                        <span>{contactInformation.attributes.email}</span>
+                    </div>
+                </div>
+                <a class="font-bold hover:underline" href="#">Données personnelles</a>
+                <a class="font-bold hover:underline" href="#">Mentions Legales - RGPD</a>
+            </div>
         </footer>
     </body>
 </html>
