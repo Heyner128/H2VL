@@ -1,0 +1,33 @@
+{
+  "kind": "singleType",
+  "collectionName": "coordonneess",
+  "info": {
+    "singularName": "coordonnees",
+    "pluralName": "coordonneess",
+    "displayName": "Coordonnées",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "adresse": {
+      "type": "string"
+    },
+    "numero_telephone": {
+      "type": "string"
+    },
+    "ville": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "code_postal": {
+      "type": "integer",
+      "min": 0,
+      "max": 100000
+    }
+  }
+}
