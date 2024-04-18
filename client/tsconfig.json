@@ -6,5 +6,6 @@
       "@strapi-types": ["../cms/types/generated/contentTypes.d.ts"],
       "@/*": ["./src/*"]
     },
+    "esModuleInterop": true
   }
 }

@@ -1,0 +1,33 @@
+---
+import BaseLayout from "@/layout/baseLayout.astro";
+import type Article from "../interfaces/article";
+import fetchApi from "@/lib/strapi";
+import ArticlePreview from "../components/articlePreview.astro";
+
+const articles = await fetchApi<Article[]>({
+    endpoint: 'articles',
+    wrappedByKey: 'data',
+    query: {
+        populate: "*",
+        "pagination[page]": "1",
+        "pagination[pageSize]": "6"
+    }
+})
+---
+
+
+<BaseLayout title="Notre Association - H2VL">
+    <section id="main-content-wrapper" class="flex flex-col gap-8 p-5 max-w-[2000px]">
+        <span class="font-bold text-2xl">Actualités</span>
+        <div class="grid gap-x-10 gap-y-10 lg:gap-x-36 lg:gap-y-20 grid-cols-2 md:grid-cols-3">
+            {
+                articles.map((article) => (
+                        <ArticlePreview article={article}/>
+                ))
+            }
+        </div>
+        <div id="infinite-scroll-target" class="w-full h-10 bg-transparent">
+        </div>
+    </section>
+
+</BaseLayout>

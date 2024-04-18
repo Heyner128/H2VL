@@ -3,7 +3,7 @@ import Article from "@/interfaces/article";
 import Image from "astro/components/Image.astro";
 const {article}: Article = Astro.props;
 ---
-<a href={`/blog/${article.id}`} title={`Voir l'article numéro ${article.id}`} tabindex="0">
+<a href={`/actualites/${article.id}`} title={`Voir l'article numéro ${article.id}`} tabindex="0">
     <article class="flex flex-col gap-8">
         <span class="text-xl font-bold">{article.attributes.titre}</span>
         <Image
@@ -11,21 +11,19 @@ const {article}: Article = Astro.props;
                 alt={"Image article " + article.attributes.titre}
                 inferSize
         />
-        <div class="flex justify-between">
-            <span class="italic">{
+        <div class="flex max-md:flex-col max-md:gap-3 md:justify-between">
+            <span class="max-md:text-sm italic">{
                 new Date(article.attributes.createdAt)
                     .toLocaleDateString(
                         "fr-FR",
                         {
                             year: "numeric",
                             month: "numeric",
-                            day: "numeric",
-                            hour: "numeric",
-                            minute: "numeric"
+                            day: "numeric"
                         }
                     )
             }</span>
-            <span class={`font-bold px-3 py-0.5 rounded-full ${
+            <span class={`max-md:text-sm w-min font-bold px-3 rounded-full align-middle ${
                 (() => {
                     switch (article.attributes.etiquette) {
                         case "Actualité":

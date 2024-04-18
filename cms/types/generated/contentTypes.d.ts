@@ -868,6 +868,40 @@ export interface ApiCoordonneesCoordonnees extends Schema.SingleType {
   };
 }
 
+export interface ApiTexteAssociationTexteAssociation extends Schema.SingleType {
+  collectionName: 'texte_associations';
+  info: {
+    singularName: 'texte-association';
+    pluralName: 'texte-associations';
+    displayName: 'Texte Association';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    titre: Attribute.String;
+    contenu: Attribute.RichText;
+    phrase: Attribute.String;
+    image: Attribute.Media;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::texte-association.texte-association',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::texte-association.texte-association',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -888,6 +922,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::article.article': ApiArticleArticle;
       'api::coordonnees.coordonnees': ApiCoordonneesCoordonnees;
+      'api::texte-association.texte-association': ApiTexteAssociationTexteAssociation;
     }
   }
 }

@@ -58,28 +58,28 @@ const ARTICLES_TO_SHOW = Math.min(maxArticles, articles.length);
 
     highlightButton(activeImage);
 </script>
-<section class="flex flex-col gap-2 overflow-hidden h-[50dvh] w-full max-w-[2000px]">
+<section class="flex flex-col gap-2 overflow-hidden max-md:min-h-80 max-lg:min-h-[25rem] min-h-[30rem] w-full max-w-[1500px] max-md:py-7">
     <div id="carousel-contents" class="relative flex-grow">
         <div id="carousel-scroll-wrapper" class="absolute h-full flex top-0 transition-[left] ease-in-out delay-150">
-        {
-            articles.slice(0,ARTICLES_TO_SHOW).map(article => (
-                <div class="flex max-lg:flex-col gap-5 w-[100dvw] h-full px-7 pt-7">
-                    <Image
-                        src={import.meta.env.STRAPI_URL + article.attributes.image.data.attributes.url}
-                        alt={"Image article " + article.attributes.titre} class="object-cover h-5/6 max-lg:h-1/2 self-center"
-                        inferSize
-                    />
-                    <div class="flex flex-col gap-2 self-center ">
-                        <span class="font-bold text-2xl">{article.attributes.titre}</span>
-                        <span class="text-lg">{article.attributes.description}</span>
-                        <a href={`/blog/${article.id}`}><span class="text-blue-500 underline">Voir l&apos;article</span></a>
+            {
+                articles.slice(0,ARTICLES_TO_SHOW).map(article => (
+                    <div class="flex max-lg:flex-col gap-5 w-[100dvw] h-full px-7">
+                        <Image
+                            src={import.meta.env.STRAPI_URL + article.attributes.image.data.attributes.url}
+                            alt={"Image article " + article.attributes.titre} class="object-cover h-5/6 max-lg:h-1/2 self-center"
+                            inferSize
+                        />
+                        <div class="flex flex-col gap-2 self-center lg:pl-20">
+                            <span class="font-bold text-2xl max-md:text-lg">{article.attributes.titre}</span>
+                            <span class="text-lg max-md:text-sm">{article.attributes.description}</span>
+                            <a href={`/actualites/${article.id}`}><span class="max-md:text-sm text-blue-500 underline">Voir l&apos;article</span></a>
+                        </div>
                     </div>
-                </div>
-            ))
-        }
+                ))
+            }
+        </div>
     </div>
-    </div>
-    <div class="self-end flex gap-5 px-7 pb-7">
+    <div class="self-end flex gap-5 px-7 max-md:text-sm md:py-[1rem]">
         <button
             id="carousel-button-before"
             title="Voir l'article précedent"

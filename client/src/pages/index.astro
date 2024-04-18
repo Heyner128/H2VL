@@ -4,15 +4,15 @@ import BaseLayout from "@/layout/baseLayout.astro";
 import ArticlePreview from "@/components/articlePreview.astro"
 import ImageCarousel from "@/components/imageCarousel.astro";
 import Article from "@/interfaces/article";
-import Image from "astro/components/Image.astro";
-import accesibilityImage from "../../public/accesibility.svg"
+
 
 
 const articles = await fetchApi<Article[]>({
   endpoint: 'articles',
   wrappedByKey: 'data',
   query: {
-    populate: "*"
+    populate: "*",
+    "pagination[limit]": "6"
   }
 });
 
@@ -25,55 +25,35 @@ const articles = await fetchApi<Article[]>({
   <div id="articles-preview-wrapper" class="flex w-full justify-center bg-gray-100">
     <section class="flex flex-col gap-10 mt-5 p-7 max-w-[2000px]">
       <span class="text-2xl font-bold">Actualités</span>
-      <div class="grid gap-x-20 gap-y-10 lg:gap-x-36 lg:gap-y-20 grid-cols-2 md:grid-cols-3">
+      <div class="grid gap-x-10 gap-y-10 lg:gap-x-36 lg:gap-y-20 grid-cols-2 md:grid-cols-3">
         {
-          articles.slice(0, 6).map((article) => (
+          articles.map((article) => (
               <ArticlePreview article={article}/>
           ))
         }
       </div>
-      <a href="/blog" class="text-center underline text-blue-500 my-5">Voir tous les actualités</a>
+      <a href="/actualites" class="text-center underline text-blue-500 my-5">Voir tous les actualités</a>
     </section>
   </div>
-  <div id="missions-wrapper" class="flex w-full justify-center bg-blue-500">
+  <div id="missions-wrapper" class="flex w-full justify-center bg-gradient-to-r from-blue-600 to-blue-400">
     <section class="text-white flex flex-col gap-10 p-7 max-w-[2000px] w-full">
       <span class="text-2xl font-bold">Nos missions</span>
-      <div class="flex justify-evenly gap-10 my-10">
+      <div class="flex justify-evenly gap-10 max-md:gap-7 my-10">
         <div class="flex flex-col items-center gap-5">
-          <span class="material-symbols-outlined flex justify-center items-center text-5xl size-20 rounded-full text-green-100 bg-blue-600">settings_accessibility</span>
-          <span class="font-bold">Accompagner</span>
+          <span class="material-symbols-outlined flex justify-center items-center text-5xl max-md:text-4xl max-md:size-16 size-20 text-green-300">settings_accessibility</span>
+          <span class="font-bold max-md:text-sm">Accompagner</span>
         </div>
         <div class="flex flex-col items-center gap-5">
-          <span class="material-symbols-outlined flex justify-center items-center text-5xl size-20 rounded-full text-green-100 bg-blue-600">campaign</span>
-          <span class="font-bold">Sensibiliser</span>
+          <span class="material-symbols-outlined flex justify-center items-center text-5xl max-md:text-4xl max-md:size-16 size-20 text-green-300">campaign</span>
+          <span class="font-bold max-md:text-sm">Sensibiliser</span>
         </div>
         <div class="flex flex-col items-center gap-5">
-          <span class="material-symbols-outlined flex justify-center items-center text-5xl size-20 rounded-full text-green-100 bg-blue-600">partner_exchange</span>
-          <span class="font-bold">Accompagner</span>
+          <span class="material-symbols-outlined flex justify-center items-center text-5xl max-md:text-4xl max-md:size-16 size-20 text-green-300">partner_exchange</span>
+          <span class="font-bold max-md:text-sm">Accompagner</span>
         </div>
       </div>
     </section>
   </div>
-  <div id="newsletter-wrapper" class="flex w-full justify-center">
-    <section class="flex flex-col gap-10 p-7 max-w-[2000px] w-full">
-      <span class="text-2xl font-bold">S&apos;abonner à notre lettre d&apos;informations</span>
-      <div class="flex max-md:flex-col-reverse gap-5 justify-evenly">
-        <div class="self-center flex flex-col gap-10">
-          <div class="flex gap-8">
-            <label class="sr-only" for="newsletter-name-input">Nom</label>
-            <input id="newsletter-name-input" placeholder="nom" type="text" class="px-3 py-0.5 border-2 border-gray-200 rounded-lg" />
-            <label class="sr-only" for="newsletter-email-input" >Email</label>
-            <input id="newsletter-email-input" placeholder="email" type="email" class="px-3 py-0.5 border-2 border-gray-200 rounded-lg" />
-          </div>
-          <button class="bg-blue-500 hover:bg-blue-600 text-white font-bold self-center rounded-full px-3 py-0.5">S&apos;abonner</button>
-        </div>
-        <Image
-          src={accesibilityImage}
-          class="h-80 max-md:h-60 w-auto"
-          alt="image d'une femme en fateuil roulant touchant une page web"
-        />
-      </div>
-    </section>
-  </div>
+
 
 </BaseLayout>

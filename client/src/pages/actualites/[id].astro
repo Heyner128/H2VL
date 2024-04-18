@@ -3,6 +3,7 @@ import fetchApi from '@/lib//strapi';
 import type Article from '@/interfaces/article';
 import BaseLayout from "../../layout/baseLayout.astro";
 import Image from "astro/components/Image.astro";
+import renderMarkdown from "@/lib/markdown";
 
 export async function getStaticPaths() {
   const articles = await fetchApi<Article[]>({
@@ -22,9 +23,10 @@ const article: Article = Astro.props;
 ---
 
 <BaseLayout title="Actualités - H2VL">
-    <h1>{article.attributes.titre}</h1>
-    <Image src={import.meta.env.STRAPI_URL + article.attributes.image.data.attributes.url} alt={"Image article " + article.attributes.titre} inferSize />
+    <div id="content-wrapper" class="p-7 max-w-[2000px] flex flex-col gap-10 items-center">
+        <span class="font-bold text-2xl">{article.attributes.titre}</span>
+        <Image src={import.meta.env.STRAPI_URL + article.attributes.image.data.attributes.url} alt={"Image article " + article.attributes.titre} inferSize />
+        <div class="text-justify" set:html={renderMarkdown(article.attributes.contenu)} />
+    </div>
 
-
-    <p>{article.attributes.contenu}</p>
 </BaseLayout>
