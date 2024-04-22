@@ -19,7 +19,7 @@ const articles = await fetchApi<Article[]>({
 <BaseLayout title="Notre Association - H2VL">
     <section id="main-content-wrapper" class="flex flex-col gap-8 p-5 max-w-[2000px]">
         <span class="font-bold text-2xl">Actualités</span>
-        <div class="grid gap-x-10 gap-y-10 lg:gap-x-36 lg:gap-y-20 grid-cols-2 md:grid-cols-3">
+        <div class="grid gap-x-20 gap-y-10 lg:gap-y-20 grid-cols-1 md:grid-cols-3">
             {
                 articles.map((article) => (
                         <ArticlePreview article={article}/>

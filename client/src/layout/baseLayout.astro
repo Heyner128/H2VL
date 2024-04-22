@@ -8,8 +8,9 @@ import accesibilityImage from "../../public/accesibility.svg";
 import ContactInformation from "@/interfaces/contactInformation";
 import fetchApi from "@/lib/strapi";
 
-import CustomInput from "../components/customInput.astro";
+import CustomInput from "@/components/customInput.astro";
 
+import AccesibilityMenu from "@/components/accesibilityMenu.astro";
 
 const contactInformation = await fetchApi<ContactInformation>(
     {
@@ -23,6 +24,44 @@ const contactInformation = await fetchApi<ContactInformation>(
 
 const { title }  = Astro.props || {};
 ---
+
+<script>
+
+    console.log(document.querySelectorAll("#newsletter-form input, textarea"))
+
+    document
+        .querySelector("#newsletter-form")
+        .addEventListener(
+            'submit',
+            function (event)  {
+                event.preventDefault();
+                if(!this.checkValidity()) {
+                    const fields = document.querySelectorAll("#newsletter-form input, textarea");
+                    fields.forEach(field => field.setCustomValidity(""));
+                } else {
+                    this.classList.add("hidden");
+                    document
+                        .querySelector("#newsletter-form-submit-message")
+                        .classList
+                        .remove("hidden")
+                }
+            }
+        )
+
+    document.
+    querySelector("#back-newsletter-form-button")
+        .addEventListener(
+            "click",
+            function(event) {
+                document.querySelector("#newsletter-form").reset();
+                document.querySelector("#newsletter-form-submit-message").classList.add("hidden");
+                document.querySelector("#newsletter-form").classList.remove("hidden");
+            }
+        )
+</script>
+
+
+
 <!DOCTYPE html>
 <html lang="fr-FR">
 
@@ -38,6 +77,7 @@ const { title }  = Astro.props || {};
         <title>{title??"Handicap Visuel Val de Loire"}</title>
     </head>
     <body>
+        <AccesibilityMenu />
         <header class="h-16 flex justify-between align-middle bg-gradient-to-r from-blue-600 to-blue-400 text-white sticky top-0 px-5 items-center z-50">
 
             <a class="h-full w-auto" href="/">
@@ -48,19 +88,24 @@ const { title }  = Astro.props || {};
             </a>
             <NavigationBar />
         </header>
-        <main class="z-10 w-full flex flex-col items-center">
+        <main class="z-10 w-full min-h-[45dvh] flex flex-col items-center">
             <slot />
         </main>
         <div id="newsletter-wrapper" class="flex w-full justify-center">
             <section class="flex flex-col gap-10 p-7 max-w-[2000px] w-full">
                 <span class="text-2xl font-bold">S&apos;abonner à notre lettre d&apos;informations</span>
                 <div class="flex max-lg:flex-col-reverse gap-5 justify-evenly">
-                    <div class="self-center flex flex-col gap-10">
-                        <div class="flex max-md:flex-col md:gap-8 max-md:gap-5">
-                            <CustomInput placeholder="nom" type="text" label="Nom" hideLabel/>
-                            <CustomInput placeholder="email" type="email" label="Email" hideLabel/>
-                        </div>
-                        <button class="bg-gradient-to-r from-blue-500 to-blue-400 hover:bg-gradient-to-r hover:from-blue-600 hover:to-blue-500 text-white font-bold self-center rounded-full px-3 py-0.5 max-md:text-sm">S&apos;abonner</button>
+                    <form id="newsletter-form" class="self-center flex flex-col gap-10" novalidate>
+                        <fieldset class="flex max-md:flex-col md:gap-8 max-md:gap-5">
+                            <CustomInput type="text" label="Nom" required />
+                            <CustomInput type="email" label="Email" required />
+                        </fieldset>
+                        <button type="submit" class="bg-gradient-to-r from-blue-500 to-blue-400 hover:bg-gradient-to-r hover:from-blue-600 hover:to-blue-500 text-white font-bold self-center rounded-full px-3 py-0.5 max-md:text-sm">S&apos;abonner</button>
+
+                    </form>
+                    <div id="newsletter-form-submit-message" class="hidden flex flex-col gap-5">
+                        <span class="text-center">Merci pour votre abonnement</span>
+                        <button type="reset" id="back-newsletter-form-button" class="bg-gradient-to-r from-blue-500 to-blue-400 hover:bg-gradient-to-r hover:from-blue-600 hover:to-blue-500 text-white font-bold self-center rounded-full px-3 py-0.5 max-md:text-sm">Retour</button>
                     </div>
                     <Image
                             src={accesibilityImage}
@@ -70,6 +115,7 @@ const { title }  = Astro.props || {};
                 </div>
             </section>
         </div>
+
         <footer class="flex w-full justify-center bg-gradient-to-r from-blue-600 to-blue-400 text-white">
             <div class="flex max-md:flex-col max-md:gap-7 justify-between w-full p-7 max-w-[2000px]">
                 <div class="flex flex-col gap-7">

@@ -23,10 +23,16 @@ const article: Article = Astro.props;
 ---
 
 <BaseLayout title="Actualités - H2VL">
-    <div id="content-wrapper" class="p-7 max-w-[2000px] flex flex-col gap-10 items-center">
-        <span class="font-bold text-2xl">{article.attributes.titre}</span>
-        <Image src={import.meta.env.STRAPI_URL + article.attributes.image.data.attributes.url} alt={"Image article " + article.attributes.titre} inferSize />
-        <div class="text-justify" set:html={renderMarkdown(article.attributes.contenu)} />
+    <div id="content-wrapper" class="p-7 max-w-[2000px] flex flex-col gap-10">
+        <span class="font-bold text-2xl self-start">{article.attributes.titre}</span>
+        <div>
+            <Image
+                    src={import.meta.env.STRAPI_URL + article.attributes.image.data.attributes.url}
+                    alt={"Image article " + article.attributes.titre}
+                    class="md:float-right md:m-10 max-md:m-5 max-md:mb-10 object-cover rounded-xl bg-red-500"
+                    inferSize />
+            <div class="text-justify" set:html={renderMarkdown(article.attributes.contenu)} />
+        </div>
     </div>
 
 </BaseLayout>

@@ -11,24 +11,26 @@ const {
     required
 } = Astro.props;
 const id = uuid();
-const baseClass = "px-3 py-0.5 border-2 border-gray-200 rounded-lg max-md:text-sm";
+const baseClass = "px-3 py-0.5 border-2 border-gray-200 [&:user-invalid]:border-red-400 rounded-lg max-md:text-sm peer";
 ---
-<div id={`wrapper-input-${id}`} class="flex flex-col gap-2">
+<div id={`wrapper-input-${id}`} class="flex flex-col gap-2 has-[:user-invalid]:after:content-['requis'] has-[:user-invalid]:after:mt-[-0.5rem] has-[:user-invalid]:after:text-sm has-[:user-invalid]:after:text-red-600">
     <label
         for={type === "textarea"? `textarea-${id}` :`input-${id}`}
-        class={`${hideLabel?"sr-only":""} ${labelClass}`}
+        class={` ${hideLabel?"sr-only":""} ${labelClass}`}
     >{label ?? "NO_LABEL_TEXT"} {required && <span class="text-red-600">*</span>}</label>
     {type === "textarea"?
         <textarea
                 id={`textarea-${id}`}
                 placeholder={placeholder ?? ""}
                 class={`${baseClass} ${inputClass ?? ""}`}
+                required={required}
         />
         :<input
             id={`input-${id}`}
             type={type ?? "text"}
             placeholder={placeholder ?? ""}
             class={`${baseClass} ${inputClass ?? ""}`}
+            required={required}
         />
     }
 </div>

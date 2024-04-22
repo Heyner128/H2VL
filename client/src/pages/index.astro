@@ -25,7 +25,7 @@ const articles = await fetchApi<Article[]>({
   <div id="articles-preview-wrapper" class="flex w-full justify-center bg-gray-100">
     <section class="flex flex-col gap-10 mt-5 p-7 max-w-[2000px]">
       <span class="text-2xl font-bold">Actualités</span>
-      <div class="grid gap-x-10 gap-y-10 lg:gap-x-36 lg:gap-y-20 grid-cols-2 md:grid-cols-3">
+      <div class="grid gap-x-20 gap-y-10 lg:gap-y-20 grid-cols-1 md:grid-cols-3">
         {
           articles.map((article) => (
               <ArticlePreview article={article}/>

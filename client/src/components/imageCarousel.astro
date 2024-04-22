@@ -8,11 +8,18 @@ const ARTICLES_TO_SHOW = Math.min(maxArticles, articles.length);
 ---
 <script>
     let activeImage = 1;
-    const scrollWrapper = document.querySelector("#carousel-scroll-wrapper");
 
 
     const changeImageTo = (index: Number) => {
-        if("style" in scrollWrapper) scrollWrapper.style.left = `-${(index-1)*100}dvw`;
+        const articleContainers = document.querySelectorAll(".carousel-article")
+
+        articleContainers.forEach(articleContainer => {
+            if(articleContainer.id.includes(String(index))) {
+                articleContainer.classList.remove("hidden");
+            } else {
+                articleContainer.classList.add("hidden");
+            }
+        })
     }
 
     const highlightButton = (index) => {
@@ -58,18 +65,18 @@ const ARTICLES_TO_SHOW = Math.min(maxArticles, articles.length);
 
     highlightButton(activeImage);
 </script>
-<section class="flex flex-col gap-2 overflow-hidden max-md:min-h-80 max-lg:min-h-[25rem] min-h-[30rem] w-full max-w-[1500px] max-md:py-7">
-    <div id="carousel-contents" class="relative flex-grow">
-        <div id="carousel-scroll-wrapper" class="absolute h-full flex top-0 transition-[left] ease-in-out delay-150">
+<section class="flex flex-col gap-2 w-full max-w-[1500px] max-md:py-7">
+    <div id="carousel-contents" class="flex w-full h-full overflow-clip ">
+        <div id="carousel-scroll-wrapper" class="h-full flex">
             {
-                articles.slice(0,ARTICLES_TO_SHOW).map(article => (
-                    <div class="flex max-lg:flex-col gap-5 w-[100dvw] h-full px-7">
+                articles.slice(0,ARTICLES_TO_SHOW).map((article, index) => (
+                    <div id={`carousel-article-${index+1}`} class="carousel-article flex max-lg:flex-col max-lg:gap-5 w-[100dvw] h-full md:p-10 max-md:px-7">
                         <Image
                             src={import.meta.env.STRAPI_URL + article.attributes.image.data.attributes.url}
-                            alt={"Image article " + article.attributes.titre} class="object-cover h-5/6 max-lg:h-1/2 self-center"
+                            alt={"Image article " + article.attributes.titre} class="object-cover self-center rounded-xl"
                             inferSize
                         />
-                        <div class="flex flex-col gap-2 self-center lg:pl-20">
+                        <div class="flex flex-col gap-2 self-center lg:pl-20 w-fit ">
                             <span class="font-bold text-2xl max-md:text-lg">{article.attributes.titre}</span>
                             <span class="text-lg max-md:text-sm">{article.attributes.description}</span>
                             <a href={`/actualites/${article.id}`}><span class="max-md:text-sm text-blue-500 underline">Voir l&apos;article</span></a>
@@ -78,24 +85,26 @@ const ARTICLES_TO_SHOW = Math.min(maxArticles, articles.length);
                 ))
             }
         </div>
+
     </div>
-    <div class="self-end flex gap-5 px-7 max-md:text-sm md:py-[1rem]">
+    <div class="self-end flex gap-5 px-10 max-md:text-sm md:pb-10">
         <button
-            id="carousel-button-before"
-            title="Voir l'article précedent"
+                id="carousel-button-before"
+                title="Voir l'article précedent"
         >◀</button>
         {
             Array.from({ length: ARTICLES_TO_SHOW }, (_, i) => 1 + i).map(index => (
-                <button
-                    id={`carousel-number-button-${index}`}
-                    class="carousel-number-button"
-                    title={`Voir article numéro ${index}`}
-                >{index}</button>
+                    <button
+                            id={`carousel-number-button-${index}`}
+                            class="carousel-number-button"
+                            title={`Voir article numéro ${index}`}
+                    >{index}</button>
             ))
         }
         <button
-            id="carousel-button-next"
-            title="Voir l'article suivant"
+                id="carousel-button-next"
+                title="Voir l'article suivant"
         >▶</button>
     </div>
+
 </section>

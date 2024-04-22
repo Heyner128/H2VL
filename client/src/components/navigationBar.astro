@@ -10,14 +10,14 @@
 
 <nav class="relative">
     <input aria-hidden="true" type="checkbox" id="menustate" class="hidden peer"/>
-    <label for="menustate" class="group text-right text-4xl md:hidden" >
+    <label for="menustate" class="group md:hidden" >
         <a
                 id="nav-menu-open"
                 role="button"
                 href="#menustate"
                 class="peer-checked:group-[]:hidden peer-target:group-[]:hidden"
         >
-            <span aria-hidden="true">≡</span>
+            <span aria-hidden="true" class="text-right font-bold text-3xl material-symbols-outlined">menu</span>
             <span class="sr-only">Ouvrir ménu</span>
         </a>
         <a
@@ -26,7 +26,7 @@
                 href="#"
                 class="hidden peer-checked:group-[]:block peer-target:group-[]:block"
         >
-            <span aria-hidden="true">×</span>
+            <span aria-hidden="true" class="text-right text-3xl material-symbols-outlined">menu_open</span>
             <span class="sr-only">Fermer ménu</span>
         </a>
     </label>

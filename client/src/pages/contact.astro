@@ -3,15 +3,78 @@ import BaseLayout from "@/layout/baseLayout.astro";
 import CustomInput from "@/components/customInput.astro"
 ---
 
+<script>
+    (function () {
+        var setting = {"query":"94 Rue du Sanitas, Tours, France","width":600,"height":400,"satellite":false,"zoom":17,"placeId":"ChIJ-20hmC3U_EcRwnINoanl4Lc","cid":"0xb7e0e5a9a10d72c2","coords":[47.3775777,0.6976270999999999],"cityUrl":"/france/tours-904","cityAnchorText":"Carte de Tours, Région Centre, France","lang":"fr","queryString":"94 Rue du Sanitas, Tours, France","centerCoord":[47.3775777,0.6976270999999999],"id":"map-9cd199b9cc5410cd3b1ad21cab2e54d3","embed_id":"1098173"};
+        var d = document;
+        var s = d.createElement('script');
+        s.src = 'https://1map.com/js/script-for-user.js?embed_id=1098173';
+        s.async = true;
+        s.onload = function (e) {
+            window.OneMap.initMap(setting)
+        };
+        var to = d.getElementsByTagName('script')[0];
+        to.parentNode.insertBefore(s, to);
+    })();
+</script>
+
+<script>
+
+    document
+        .querySelector("#main-form")
+        .addEventListener(
+            'submit',
+            function (event)  {
+                event.preventDefault();
+                if(!this.checkValidity()) {
+                    const fields = document.querySelectorAll("#form-content-wrapper input, textarea");
+                    fields.forEach(field => field.setCustomValidity(""));
+                } else {
+                    this.classList.add("hidden");
+                    document
+                        .querySelector("#form-submit-message")
+                        .classList
+                        .remove("hidden")
+                }
+            }
+        )
+
+    document.
+        querySelector("#back-form-button")
+        .addEventListener(
+            "click",
+            function(event) {
+                document.querySelector("#main-form").reset();
+                document.querySelector("#form-submit-message").classList.add("hidden");
+                document.querySelector("#main-form").classList.remove("hidden");
+            }
+        )
+</script>
 
 <BaseLayout title="Notre Association - H2VL">
-    <section id="main-content-wrapper" class="flex flex-col gap-8 p-5 max-w-[2000px]">
-        <span class="font-bold text-2xl">Contact</span>
-        <form id="content-wrapper" class="flex flex-col gap-8">
-            <CustomInput type="text" label="Nom" required />
-            <CustomInput type="email" label="Email" required />
-            <CustomInput type="textarea" label="Message" required />
-        </form>
+    <section id="main-content-wrapper" class="flex flex-col w-full gap-8 p-5 max-w-[2000px]">
+        <span class="font-bold text-2xl w-full">Contact</span>
+        <div class="flex max-md:flex-col justify-around gap-10">
+            <div id="form-content-wrapper" class="md:w-1/3">
+                <form action="#" method="post" id="main-form" class="flex flex-col gap-8"  novalidate>
+                    <fieldset class="flex flex-col gap-8">
+                        <CustomInput type="text" label="Nom" required />
+                        <CustomInput type="email" label="Email" required />
+                        <CustomInput type="textarea" label="Message" inputClass="min-h-20" required />
+                    </fieldset>
+                    <button type="submit" class="bg-gradient-to-r from-blue-500 to-blue-400 hover:bg-gradient-to-r hover:from-blue-600 hover:to-blue-500 text-white font-bold self-center rounded-full px-3 py-0.5 max-md:text-sm">Envoyer</button>
+                </form>
+                <div id="form-submit-message" class="hidden flex flex-col gap-5">
+                    <span class="text-center">Message envoyé</span>
+                    <button type="reset" id="back-form-button" class="bg-gradient-to-r from-blue-500 to-blue-400 hover:bg-gradient-to-r hover:from-blue-600 hover:to-blue-500 text-white font-bold self-center rounded-full px-3 py-0.5 max-md:text-sm">Retour</button>
+                </div>
+            </div>
+
+            <div id="wrapper-9cd199b9cc5410cd3b1ad21cab2e54d3">
+                <div id="map-9cd199b9cc5410cd3b1ad21cab2e54d3"></div>
+                <a href="https://1map.com/fr/map-embed">1 Map</a>
+            </div>
+        </div>
     </section>
 
 </BaseLayout>

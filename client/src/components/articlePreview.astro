@@ -9,6 +9,7 @@ const {article}: Article = Astro.props;
         <Image
                 src={import.meta.env.STRAPI_URL + article.attributes.image.data.attributes.url}
                 alt={"Image article " + article.attributes.titre}
+                class="rounded-xl"
                 inferSize
         />
         <div class="flex max-md:flex-col max-md:gap-3 md:justify-between">

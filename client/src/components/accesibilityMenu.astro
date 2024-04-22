@@ -1,0 +1,99 @@
+<!-- Resize Buttons -->
+<script>
+    const TEXT_SIZES_CLASS_NAMES: string[] = [
+        "text-sm",
+        "text-md",
+        "text-lg",
+        "text-xl",
+        "text-2xl",
+        "text-3xl",
+        "text-4xl",
+        "text-5xl"
+    ]
+
+    function getTextSizeClassNames(element: Element): string[] {
+        const arrayClassList: string[] = Array.from(element.classList);
+        return arrayClassList.filter(className => TEXT_SIZES_CLASS_NAMES.some(name => className.includes(name)));
+    }
+
+    function changeTextSize(increase: boolean) {
+        const elementsWithText:NodeListOf<Element> = document.querySelectorAll("span, button, p, a, label");
+        elementsWithText.forEach((element: Element) => {
+            const textSizeClassNames: string[] = getTextSizeClassNames(element);
+            textSizeClassNames.forEach(textSizeClassName => {
+                //Replaces the class for the next or before class in the hierarchy
+                // if it's text-sm or text-9xl doesn't replace the class
+                const cleanTextSizeClassName = textSizeClassName.split(":").at(-1);
+                const classIndex = TEXT_SIZES_CLASS_NAMES.indexOf(cleanTextSizeClassName);
+                const newClass = TEXT_SIZES_CLASS_NAMES[
+                    Math.min(
+                        Math.max(classIndex+(increase?1:-1), 0),
+                        TEXT_SIZES_CLASS_NAMES.length - 1
+                    )
+                ];
+                element.classList.replace(
+                    textSizeClassName,
+                    textSizeClassName.replace(cleanTextSizeClassName, newClass)
+                )
+            });
+
+            if(textSizeClassNames.length === 0 || textSizeClassNames.every(className => className.includes(":"))) {
+                // Assumes text-md and applies text-lg or text-sm
+                element.className = element.className.concat(" ").concat(increase?"text-lg":"text-sm");
+            }
+        })
+    }
+
+    document
+        .querySelector("#zoom-in-button")
+        .addEventListener("click", () => changeTextSize(true));
+
+    document
+        .querySelector("#zoom-out-button")
+        .addEventListener("click", () => changeTextSize(false));
+</script>
+
+<!-- accesibility ménu buttons -->
+<script>
+    const accMenuClickHandler = (event: Event) => {
+        event.preventDefault();
+        const menuInput = document.querySelector("#accmenustate")
+        if(menuInput !== null && "checked" in menuInput) menuInput.checked = !menuInput.checked
+    }
+    document.querySelector("#acc-menu-open")?.addEventListener('click', accMenuClickHandler);
+    document.querySelector("#acc-menu-close")?.addEventListener('click', accMenuClickHandler);
+</script>
+
+<div class="fixed top-[20dvh] m-2 min-h-36 bg-gray-300 bg-opacity-75 rounded-xl z-[9999] flex group items-center">
+    <input aria-hidden="true" type="checkbox" id="accmenustate" class="hidden peer"/>
+    <div id="accesibility-menu-wrapper" class="hidden peer-checked:flex peer-target:flex flex-col gap-7 p-2 pr-0">
+        <button id="zoom-in-button" class="bg-gradient-to-b from-blue-500 to-blue-400 hover:bg-gradient-to-b hover:from-blue-600 hover:to-blue-500 rounded-xl">
+            <span aria-hidden="true" class="material-symbols-outlined align-middle text-white p-2">zoom_in</span>
+            <span class="sr-only">Augmenter la taille du texte</span>
+        </button>
+        <button id="zoom-out-button" class="bg-gradient-to-b from-blue-500 to-blue-400 hover:bg-gradient-to-b hover:from-blue-600 hover:to-blue-500 rounded-xl">
+            <span aria-hidden="true" class="material-symbols-outlined align-middle text-white p-2">zoom_out</span>
+            <span class="sr-only">Reduire la taille du texte</span>
+        </button>
+    </div>
+    <label for="accmenustate" class="self-center cursor-pointer group">
+        <a
+            id="acc-menu-open"
+            role="button"
+            href="#"
+            class="peer-checked:group-[]:hidden peer-target:group-[]:hidden"
+        >
+            <span aria-hidden="true" class="material-symbols-outlined font-bold">arrow_right</span>
+            <span class="sr-only">Ouvrir ménu d&apos;accesibilité</span>
+        </a>
+        <a
+                id="acc-menu-close"
+                role="button"
+                href="#accmenustate"
+                class="hidden peer-checked:group-[]:block peer-target:group-[]:block"
+        >
+            <span aria-hidden="true" class="material-symbols-outlined font-bold">arrow_left</span>
+            <span class="sr-only">Fermer ménu d&apos;accesibilité</span>
+        </a>
+    </label>
+</div>
