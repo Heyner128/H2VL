@@ -25,7 +25,7 @@ export default async function fetchApi<T>({
     endpoint = endpoint.slice(1);
   }
 
-  const url = new URL(`${import.meta.env.STRAPI_URL}/api/${endpoint}`);
+  const url = new URL(`${import.meta.env.PUBLIC_STRAPI_URL}/api/${endpoint}`);
 
   if (query) {
     Object.entries(query).forEach(([key, value]) => {
@@ -34,7 +34,7 @@ export default async function fetchApi<T>({
   }
   const res = await axios.get(url.toString(), {
     headers: {
-      Authorization: `Bearer ${import.meta.env.STRAPI_API_TOKEN}`,
+      Authorization: `Bearer ${import.meta.env.PUBLIC_STRAPI_API_TOKEN}`,
     },
   });
   let data = res.data;

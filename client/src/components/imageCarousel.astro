@@ -72,7 +72,7 @@ const ARTICLES_TO_SHOW = Math.min(maxArticles, articles.length);
                 articles.slice(0,ARTICLES_TO_SHOW).map((article, index) => (
                     <div id={`carousel-article-${index+1}`} class="carousel-article flex max-lg:flex-col max-lg:gap-5 w-[100dvw] h-full md:p-10 max-md:px-7">
                         <Image
-                            src={import.meta.env.STRAPI_URL + article.attributes.image.data.attributes.url}
+                            src={import.meta.env.PUBLIC_STRAPI_URL + article.attributes.image.data.attributes.url}
                             alt={"Image article " + article.attributes.titre} class="object-cover self-center rounded-xl"
                             inferSize
                         />

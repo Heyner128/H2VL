@@ -27,7 +27,7 @@ const article: Article = Astro.props;
         <span class="font-bold text-2xl self-start">{article.attributes.titre}</span>
         <div>
             <Image
-                    src={import.meta.env.STRAPI_URL + article.attributes.image.data.attributes.url}
+                    src={import.meta.env.PUBLIC_STRAPI_URL + article.attributes.image.data.attributes.url}
                     alt={"Image article " + article.attributes.titre}
                     class="md:float-right md:m-10 max-md:m-5 max-md:mb-10 object-cover rounded-xl bg-red-500"
                     inferSize />

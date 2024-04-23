@@ -27,8 +27,6 @@ const { title }  = Astro.props || {};
 
 <script>
 
-    console.log(document.querySelectorAll("#newsletter-form input, textarea"))
-
     document
         .querySelector("#newsletter-form")
         .addEventListener(
@@ -128,7 +126,7 @@ const { title }  = Astro.props || {};
                     </div>
                 </div>
                 <a class="font-bold hover:underline" href="#">Données personnelles</a>
-                <a class="font-bold hover:underline" href="#">Mentions Legales - RGPD</a>
+                <a class="font-bold hover:underline" href="/rgpd">Mentions Legales - RGPD</a>
             </div>
         </footer>
     </body>

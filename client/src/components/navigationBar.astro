@@ -8,7 +8,7 @@
     document.querySelector("#nav-menu-close")?.addEventListener('click', navMenuClickHandler);
 </script>
 
-<nav class="relative">
+<nav>
     <input aria-hidden="true" type="checkbox" id="menustate" class="hidden peer"/>
     <label for="menustate" class="group md:hidden" >
         <a
@@ -30,8 +30,7 @@
             <span class="sr-only">Fermer ménu</span>
         </a>
     </label>
-    <div class="max-md:hidden max-md:absolute
-     max-md:h-dvh max-md:w-dvw max-md:right-0 max-md:peer-checked:block max-md:peer-target:block max-md:bg-black max-md:bg-opacity-35 max-md:-me-5 max-md:mt-3">
+    <div class="max-md:hidden max-md:absolute max-md:top-16 max-md:h-dvh max-md:w-dvw max-md:right-0 max-md:peer-checked:block max-md:peer-target:block max-md:bg-black max-md:bg-opacity-35 ">
         <ul class="max-md:absolute max-md:right-0 flex max-md:flex-col gap-10 max-md:bg-gradient-to-r max-md:from-blue-500 max-md:to-blue-400 max-md:h-dvh max-md:w-[50dvw] max-md:text-center max-md:pt-3">
             <li class={/^\/$/.test(Astro.url.pathname)?"font-bold underline underline-offset-[0.5rem]":""}><a href="/">Accueil</a></li>
             <li class={/association/.test(Astro.url.pathname)?"font-bold underline underline-offset-[0.5rem]":""}><a href="/association">L&apos;association</a></li>

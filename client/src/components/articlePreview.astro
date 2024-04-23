@@ -7,7 +7,7 @@ const {article}: Article = Astro.props;
     <article class="flex flex-col gap-8">
         <span class="text-xl font-bold">{article.attributes.titre}</span>
         <Image
-                src={import.meta.env.STRAPI_URL + article.attributes.image.data.attributes.url}
+                src={import.meta.env.PUBLIC_STRAPI_URL + article.attributes.image.data.attributes.url}
                 alt={"Image article " + article.attributes.titre}
                 class="rounded-xl"
                 inferSize

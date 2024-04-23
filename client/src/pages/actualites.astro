@@ -15,11 +15,86 @@ const articles = await fetchApi<Article[]>({
 })
 ---
 
+<script>
+    import fetchApi from "../lib/strapi";
+
+
+    let lastScrolledPage = 1;
+
+    function createArticlePreviewComponent(article: Article): Element {
+        const placeholder = document.createElement('div');
+        placeholder.innerHTML = `
+            <a href="/actualites/${article.id}" title="Voir l'article numéro ${article.id}" tabindex="0">
+                <article class="flex flex-col gap-8">
+                    <span class="text-xl font-bold">${article.attributes.titre}</span>
+                    <Image
+                            src=${import.meta.env.PUBLIC_STRAPI_URL + article.attributes.image.data.attributes.url}
+                            alt$={"Image article " + article.attributes.titre}
+                            class="rounded-xl"
+                            inferSize
+                    />
+                    <div class="flex max-md:flex-col max-md:gap-3 md:justify-between">
+                        <span class="max-md:text-sm italic">${
+                            new Date(article.attributes.createdAt)
+                                .toLocaleDateString(
+                                    "fr-FR",
+                                    {
+                                        year: "numeric",
+                                        month: "numeric",
+                                        day: "numeric"
+                                    }
+                                )
+                        }</span>
+                        <span class="max-md:text-sm w-min font-bold px-3 rounded-full align-middle ${
+                        (() => {
+                            switch (article.attributes.etiquette) {
+                                case "Actualité":
+                                    return "bg-green-900 text-white";
+                                case "Evènement":
+                                    return "bg-amber-800 text-white";
+                                case "Article":
+                                    return "bg-red-500 text-white";
+                                default:
+                                    return "bg-blue-500 text-white";
+                            }
+                        })()
+                    }">${article.attributes.etiquette}</span>
+                    </div>
+                    <p class="text-justify">${article.attributes.description}</p>
+                </article>
+            </a>
+        `;
+        return placeholder.firstElementChild;
+    }
+
+
+    const intersectionObserver = new IntersectionObserver(entries => {
+        if(entries[0].intersectionRatio <=0) return;
+        lastScrolledPage++;
+        fetchApi<Article[]>({
+            endpoint: 'articles',
+            wrappedByKey: 'data',
+            query: {
+                populate: "*",
+                "pagination[page]": String(lastScrolledPage),
+                "pagination[pageSize]": "6"
+            }
+        }).then((articles: Article[]) => {
+            articles.forEach(article => {
+                document.querySelector("#article-list-wrapper").append(
+                    createArticlePreviewComponent(article)
+                );
+            })
+        })
+    });
+
+    intersectionObserver.observe(document.querySelector("#infinite-scroll-target"));
+</script>
 
 <BaseLayout title="Notre Association - H2VL">
     <section id="main-content-wrapper" class="flex flex-col gap-8 p-5 max-w-[2000px]">
         <span class="font-bold text-2xl">Actualités</span>
-        <div class="grid gap-x-20 gap-y-10 lg:gap-y-20 grid-cols-1 md:grid-cols-3">
+        <div id="article-list-wrapper" class="grid gap-x-20 gap-y-10 lg:gap-y-20 grid-cols-1 md:grid-cols-3">
             {
                 articles.map((article) => (
                         <ArticlePreview article={article}/>
