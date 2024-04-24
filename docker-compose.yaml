@@ -11,7 +11,7 @@ services:
       interval: 15s
       test: "curl -f http://localhost:1337 || exit 1"
     volumes:
-      - ./cms/.tmp:/srv/app/.tmp
+      - ./cms/.tmp:/usr/src/app/.tmp
     ports:
       - "1337:1337"
 
