@@ -12,6 +12,9 @@ export default defineConfig({
   image: {
     domains: [PUBLIC_STRAPI_URL]
   },
+  server: {
+    host: "0.0.0.0"
+  },
   site: deployUrl.origin,
   base: deployUrl.pathname,
   output: "hybrid",
