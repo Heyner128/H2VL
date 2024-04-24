@@ -4,6 +4,7 @@ services:
     environment:
       - DATABASE_CLIENT=sqlite
       - DATABASE_FILENAME=.tmp/data.db
+      - NODE_ENV=production
     volumes:
       - ./cms/.tmp:/srv/app/.tmp
     ports:
@@ -11,6 +12,8 @@ services:
 
   astro:
     build: ./client
+    environment:
+      - NODE_ENV=production
     ports:
       - "4321:4321"
     depends_on:
