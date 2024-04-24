@@ -15,7 +15,7 @@ export default defineConfig({
   server: {
     host: "0.0.0.0"
   },
-  site: deployUrl.href,
+  site: deployUrl.origin,
   base: deployUrl.pathname,
   output: "hybrid",
   adapter: node({

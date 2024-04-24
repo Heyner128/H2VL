@@ -32,7 +32,7 @@ const articles = await fetchApi<Article[]>({
           ))
         }
       </div>
-      <a href="/actualites" class="text-center underline text-blue-500 my-5">Voir tous les actualités</a>
+      <a href={`${import.meta.env.BASE_URL}/actualites`} class="text-center underline text-blue-500 my-5">Voir tous les actualités</a>
     </section>
   </div>
   <div id="missions-wrapper" class="flex w-full justify-center bg-gradient-to-r from-blue-600 to-blue-400">

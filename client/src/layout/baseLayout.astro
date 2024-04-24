@@ -128,7 +128,7 @@ const { title }  = Astro.props || {};
                         <span>{contactInformation.attributes.email}</span>
                     </div>
                 </div>
-                <a class="font-bold hover:underline" href="/rgpd">Politique de confidentialité</a>
+                <a class="font-bold hover:underline" href={`${import.meta.env.BASE_URL}/rgpd`}>Politique de confidentialité</a>
             </div>
         </footer>
     </body>

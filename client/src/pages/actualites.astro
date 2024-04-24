@@ -24,7 +24,7 @@ const articles = await fetchApi<Article[]>({
     function createArticlePreviewComponent(article: Article): Element {
         const placeholder = document.createElement('div');
         placeholder.innerHTML = `
-            <a href="/actualites/${article.id}" title="Voir l'article numéro ${article.id}" tabindex="0">
+            <a href="${import.meta.env.BASE_URL}/actualites/${article.id}"} title="Voir l'article numéro ${article.id}" tabindex="0">
                 <article class="flex flex-col gap-8">
                     <span class="text-xl font-bold">${article.attributes.titre}</span>
                     <Image
