@@ -14,14 +14,14 @@ FROM node:20
 
 WORKDIR /usr/src/app
 
-ENV NODE_ENV=production
-
-RUN npm install --omit=dev
-
 COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app/public ./public
 COPY --from=builder /usr/src/app/config ./config
 COPY --from=builder /usr/src/app/package.json .
 COPY --from=builder /usr/src/app/tsconfig.json .
+
+ENV NODE_ENV=production
+
+RUN npm install --omit=dev
 
 CMD ["npm", "start"]
