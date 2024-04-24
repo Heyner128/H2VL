@@ -1,6 +1,7 @@
 services:
   strapi:
     build: ./cms
+    env_file: ./cms/.env
     environment:
       - DATABASE_CLIENT=sqlite
       - DATABASE_FILENAME=.tmp/data.db
@@ -16,6 +17,7 @@ services:
 
   astro:
     build: ./client
+    env_file: ./cms/.env
     ports:
       - "4321:4321"
     healthcheck:
