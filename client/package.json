@@ -10,7 +10,7 @@
     "build": "astro check && astro build",
     "dev": "astro dev",
     "preview": "astro preview",
-    "start": "astro dev"
+    "start": "node ./dist/server/entry.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.6",

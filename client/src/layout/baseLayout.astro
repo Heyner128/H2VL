@@ -5,7 +5,7 @@ import NavigationBar from "@/components/navigationBar.astro";
 import Image from "astro/components/Image.astro";
 import accesibilityImage from "../../public/accesibility.svg";
 
-import ContactInformation from "@/interfaces/contactInformation";
+import type ContactInformation from "@/interfaces/contactInformation";
 import fetchApi from "@/lib/strapi";
 
 import CustomInput from "@/components/customInput.astro";
@@ -29,18 +29,19 @@ const { title }  = Astro.props || {};
 
     document
         .querySelector("#newsletter-form")
-        .addEventListener(
+        ?.addEventListener(
             'submit',
             function (event)  {
                 event.preventDefault();
-                if(!this.checkValidity()) {
-                    const fields = document.querySelectorAll("#newsletter-form input, textarea");
+                const formElement: HTMLFormElement = event.currentTarget as HTMLFormElement;
+                if(!formElement.checkValidity()) {
+                    const fields: NodeListOf<HTMLInputElement | HTMLTextAreaElement> = document.querySelectorAll("#newsletter-form input, textarea");
                     fields.forEach(field => field.setCustomValidity(""));
                 } else {
-                    this.classList.add("hidden");
+                   formElement.classList.add("hidden");
                     document
                         .querySelector("#newsletter-form-submit-message")
-                        .classList
+                        ?.classList
                         .remove("hidden")
                 }
             }
@@ -48,12 +49,14 @@ const { title }  = Astro.props || {};
 
     document.
     querySelector("#back-newsletter-form-button")
-        .addEventListener(
+        ?.addEventListener(
             "click",
-            function(event) {
-                document.querySelector("#newsletter-form").reset();
-                document.querySelector("#newsletter-form-submit-message").classList.add("hidden");
-                document.querySelector("#newsletter-form").classList.remove("hidden");
+            function() {
+                const formElement: HTMLFormElement | null = document.querySelector("#newsletter-form")
+
+                formElement?.reset();
+                document.querySelector("#newsletter-form-submit-message")?.classList.add("hidden");
+                formElement?.classList.remove("hidden");
             }
         )
 </script>

@@ -1,15 +1,15 @@
 export default interface Article {
-  id: Number;
+  id: number;
   attributes: {
-    titre: String;
-    contenu: String;
-    description: String;
-    createdAt: String;
-    etiquette: String;
+    titre: string;
+    contenu: string;
+    description: string;
+    createdAt: string;
+    etiquette: string;
     image: {
       data: {
         attributes: {
-          url: String;
+          url: string;
         }
       }
     };

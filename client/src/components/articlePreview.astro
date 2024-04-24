@@ -1,7 +1,6 @@
 ---
-import Article from "@/interfaces/article";
 import Image from "astro/components/Image.astro";
-const {article}: Article = Astro.props;
+const {article} = Astro.props;
 ---
 <a href={`/actualites/${article.id}`} title={`Voir l'article numéro ${article.id}`} tabindex="0">
     <article class="flex flex-col gap-8">

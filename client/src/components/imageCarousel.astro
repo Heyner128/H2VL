@@ -10,7 +10,7 @@ const ARTICLES_TO_SHOW = Math.min(maxArticles, articles.length);
     let activeImage = 1;
 
 
-    const changeImageTo = (index: Number) => {
+    const changeImageTo = (index: number) => {
         const articleContainers = document.querySelectorAll(".carousel-article")
 
         articleContainers.forEach(articleContainer => {
@@ -22,11 +22,11 @@ const ARTICLES_TO_SHOW = Math.min(maxArticles, articles.length);
         })
     }
 
-    const highlightButton = (index) => {
-        document.querySelector(`#carousel-number-button-${index}`).classList.toggle("font-bold");
+    const highlightButton = (index: number) => {
+        document.querySelector(`#carousel-number-button-${index}`)?.classList.toggle("font-bold");
     }
 
-    const changeElementTo = (index) => {
+    const changeElementTo = (index: number) => {
         changeImageTo(index);
         highlightButton(activeImage);
         activeImage = index;
@@ -34,9 +34,9 @@ const ARTICLES_TO_SHOW = Math.min(maxArticles, articles.length);
     }
 
     const numberButtonClickHandler:EventListener = (event: Event) => {
-        if("innerText" in event.currentTarget) {
-            const buttonNumber = Number(event.currentTarget.innerText)
-            changeElementTo(buttonNumber);
+        if(event.currentTarget && "innerText" in event.currentTarget) {
+            const buttonnumber = Number(event.currentTarget.innerText)
+            changeElementTo(buttonnumber);
         }
     }
 
@@ -49,17 +49,17 @@ const ARTICLES_TO_SHOW = Math.min(maxArticles, articles.length);
         changeElementTo((activeImage-1)<1?ARTICLES_TO_SHOW:activeImage-1);
     }
 
-    const beforeButton = document.querySelector("#carousel-button-before");
+    const beforeButton: Element | null = document.querySelector("#carousel-button-before");
 
-    beforeButton.addEventListener("click", beforeButtonClickHandler)
+    beforeButton?.addEventListener("click", beforeButtonClickHandler)
 
     const nextButtonClickHandler = () => {
         changeElementTo((activeImage+1)>ARTICLES_TO_SHOW?1:activeImage+1);
     }
 
-    const nextButton = document.querySelector("#carousel-button-next");
+    const nextButton: Element | null = document.querySelector("#carousel-button-next");
 
-    nextButton.addEventListener("click", nextButtonClickHandler)
+    nextButton?.addEventListener("click", nextButtonClickHandler)
 
     setInterval(() => nextButtonClickHandler(), 5000);
 

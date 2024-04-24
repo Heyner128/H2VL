@@ -17,7 +17,7 @@ const articles = await fetchApi<Article[]>({
 
 <script>
     import fetchApi from "../lib/strapi";
-
+    import type Article from "../interfaces/article";
 
     let lastScrolledPage = 1;
 
@@ -64,6 +64,7 @@ const articles = await fetchApi<Article[]>({
                 </article>
             </a>
         `;
+        if(!placeholder.firstElementChild) throw new Error("element child not found");
         return placeholder.firstElementChild;
     }
 
@@ -81,14 +82,15 @@ const articles = await fetchApi<Article[]>({
             }
         }).then((articles: Article[]) => {
             articles.forEach(article => {
-                document.querySelector("#article-list-wrapper").append(
+                document.querySelector("#article-list-wrapper")?.append(
                     createArticlePreviewComponent(article)
                 );
             })
         })
     });
-
-    intersectionObserver.observe(document.querySelector("#infinite-scroll-target"));
+    const scrollTarget: HTMLDivElement | null  = document.querySelector("#infinite-scroll-target")
+    if(!scrollTarget) throw new Error("Wrong scroll target!");
+    intersectionObserver.observe(scrollTarget);
 </script>
 
 <BaseLayout title="Notre Association - H2VL">

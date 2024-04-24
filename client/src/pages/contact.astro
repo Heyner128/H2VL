@@ -4,17 +4,26 @@ import CustomInput from "@/components/customInput.astro"
 ---
 
 <script>
+    declare global {
+        interface Window  {
+            OneMap: {
+                initMap: (arg0: object) => void;
+            }
+        }
+    }
+
+
     (function () {
-        var setting = {"query":"94 Rue du Sanitas, Tours, France","width":600,"height":400,"satellite":false,"zoom":17,"placeId":"ChIJ-20hmC3U_EcRwnINoanl4Lc","cid":"0xb7e0e5a9a10d72c2","coords":[47.3775777,0.6976270999999999],"cityUrl":"/france/tours-904","cityAnchorText":"Carte de Tours, Région Centre, France","lang":"fr","queryString":"94 Rue du Sanitas, Tours, France","centerCoord":[47.3775777,0.6976270999999999],"id":"map-9cd199b9cc5410cd3b1ad21cab2e54d3","embed_id":"1098173"};
-        var d = document;
-        var s = d.createElement('script');
+        const setting = {"query":"94 Rue du Sanitas, Tours, France","width":600,"height":400,"satellite":false,"zoom":17,"placeId":"ChIJ-20hmC3U_EcRwnINoanl4Lc","cid":"0xb7e0e5a9a10d72c2","coords":[47.3775777,0.6976270999999999],"cityUrl":"/france/tours-904","cityAnchorText":"Carte de Tours, Région Centre, France","lang":"fr","queryString":"94 Rue du Sanitas, Tours, France","centerCoord":[47.3775777,0.6976270999999999],"id":"map-9cd199b9cc5410cd3b1ad21cab2e54d3","embed_id":"1098173"};
+        const d = document;
+        const s = d.createElement('script');
         s.src = 'https://1map.com/js/script-for-user.js?embed_id=1098173';
         s.async = true;
-        s.onload = function (e) {
+        s.onload = function () {
             window.OneMap.initMap(setting)
         };
-        var to = d.getElementsByTagName('script')[0];
-        to.parentNode.insertBefore(s, to);
+        const to = d.getElementsByTagName('script')[0];
+        to.parentNode?.insertBefore(s, to);
     })();
 </script>
 
@@ -22,18 +31,19 @@ import CustomInput from "@/components/customInput.astro"
 
     document
         .querySelector("#main-form")
-        .addEventListener(
+        ?.addEventListener(
             'submit',
             function (event)  {
                 event.preventDefault();
-                if(!this.checkValidity()) {
-                    const fields = document.querySelectorAll("#form-content-wrapper input, textarea");
+                const form: HTMLFormElement = event.currentTarget as HTMLFormElement;
+                if(!form.checkValidity()) {
+                    const fields: NodeListOf<HTMLInputElement | HTMLTextAreaElement> = document.querySelectorAll("#form-content-wrapper input, textarea");
                     fields.forEach(field => field.setCustomValidity(""));
                 } else {
-                    this.classList.add("hidden");
+                    form.classList.add("hidden");
                     document
                         .querySelector("#form-submit-message")
-                        .classList
+                        ?.classList
                         .remove("hidden")
                 }
             }
@@ -41,12 +51,14 @@ import CustomInput from "@/components/customInput.astro"
 
     document.
         querySelector("#back-form-button")
-        .addEventListener(
+        ?.addEventListener(
             "click",
-            function(event) {
-                document.querySelector("#main-form").reset();
-                document.querySelector("#form-submit-message").classList.add("hidden");
-                document.querySelector("#main-form").classList.remove("hidden");
+            function() {
+                const form: HTMLFormElement | null = document.querySelector("#main-form");
+
+                form?.reset();
+                document.querySelector("#form-submit-message")?.classList.add("hidden");
+                form?.classList.remove("hidden");
             }
         )
 </script>

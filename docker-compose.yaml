@@ -1,0 +1,17 @@
+services:
+  strapi:
+    build: ./cms
+    environment:
+      - DATABASE_CLIENT=sqlite
+      - DATABASE_FILENAME=.tmp/data.db
+    volumes:
+      - ./cms/.tmp:/srv/app/.tmp
+    ports:
+      - "1337:1337"
+
+  astro:
+    build: ./client
+    ports:
+      - "4321:4321"
+    depends_on:
+      - strapi

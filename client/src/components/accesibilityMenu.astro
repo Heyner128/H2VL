@@ -23,9 +23,9 @@
             textSizeClassNames.forEach(textSizeClassName => {
                 //Replaces the class for the next or before class in the hierarchy
                 // if it's text-sm or text-9xl doesn't replace the class
-                const cleanTextSizeClassName = textSizeClassName.split(":").at(-1);
-                const classIndex = TEXT_SIZES_CLASS_NAMES.indexOf(cleanTextSizeClassName);
-                const newClass = TEXT_SIZES_CLASS_NAMES[
+                const cleanTextSizeClassName: string | undefined = textSizeClassName.split(":").at(-1);
+                const classIndex = TEXT_SIZES_CLASS_NAMES.indexOf(cleanTextSizeClassName ?? "");
+                const newClass: string = TEXT_SIZES_CLASS_NAMES[
                     Math.min(
                         Math.max(classIndex+(increase?1:-1), 0),
                         TEXT_SIZES_CLASS_NAMES.length - 1
@@ -33,7 +33,7 @@
                 ];
                 element.classList.replace(
                     textSizeClassName,
-                    textSizeClassName.replace(cleanTextSizeClassName, newClass)
+                    textSizeClassName.replace(cleanTextSizeClassName ?? "", newClass)
                 )
             });
 
@@ -46,11 +46,11 @@
 
     document
         .querySelector("#zoom-in-button")
-        .addEventListener("click", () => changeTextSize(true));
+        ?.addEventListener("click", () => changeTextSize(true));
 
     document
         .querySelector("#zoom-out-button")
-        .addEventListener("click", () => changeTextSize(false));
+        ?.addEventListener("click", () => changeTextSize(false));
 </script>
 
 <!-- accesibility ménu buttons -->
