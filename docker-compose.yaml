@@ -17,7 +17,7 @@ services:
 
   astro:
     build: ./client
-    env_file: ./cms/.env
+    env_file: ./client/.env
     ports:
       - "4321:4321"
     healthcheck:
