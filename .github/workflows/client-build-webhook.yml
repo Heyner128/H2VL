@@ -8,4 +8,4 @@ jobs:
 
     steps:
       - name: Build client
-        run: npm run build  -w=client
+        run: cd ~/H2VL && npm run build  -w=client
