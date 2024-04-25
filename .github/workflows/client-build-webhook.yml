@@ -1,9 +1,6 @@
 name: NPM Build
 
-on:
-  repository_dispatch:
-    types:
-      - webhook
+on: workflow_dispatch
 
 jobs:
   build:
