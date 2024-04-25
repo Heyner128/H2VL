@@ -1,0 +1,14 @@
+name: NPM Build
+
+on:
+  repository_dispatch:
+    types:
+      - webhook
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Build client
+        run: npm run build  -w=client
