@@ -24,6 +24,11 @@ const contactInformation = await fetchApi<ContactInformation>(
 
 const { title }  = Astro.props || {};
 ---
+<script>
+    import ArticlePreview from "../components/web-components/articlePreview";
+    customElements.define("article-preview", ArticlePreview);
+</script>
+
 
 <script>
 
@@ -72,8 +77,8 @@ const { title }  = Astro.props || {};
         <meta name="keywords" content="Handicap, Blog, France, Web"/>
         <meta name="author" content="Heyner Cuevas" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" href={`${import.meta.env.BASE_URL}/favicon.png`} type="image/png" sizes="32x32">
-        <link rel="apple-touch-icon"  href={`${import.meta.env.BASE_URL}/favicon.png`} type="image/png" sizes="32x32">
+        <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.png`} type="image/png" sizes="32x32">
+        <link rel="apple-touch-icon"  href={`${import.meta.env.BASE_URL}favicon.png`} type="image/png" sizes="32x32">
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <title>{title??"Handicap Visuel Val de Loire"}</title>
     </head>
@@ -128,7 +133,7 @@ const { title }  = Astro.props || {};
                         <span>{contactInformation.attributes.email}</span>
                     </div>
                 </div>
-                <a class="font-bold hover:underline" href={`${import.meta.env.BASE_URL}/rgpd`}>Politique de confidentialité</a>
+                <a class="font-bold hover:underline" href={`${import.meta.env.BASE_URL}rgpd`}>Politique de confidentialité</a>
             </div>
         </footer>
     </body>

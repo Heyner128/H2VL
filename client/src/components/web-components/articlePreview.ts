@@ -1,0 +1,139 @@
+export default class ArticlePreview extends HTMLElement {
+    private DATE_FORMAT: {
+        locales: Intl.LocalesArgument,
+        options: Intl.DateTimeFormatOptions
+    } = {
+        locales: "fr-FR",
+        options: {
+            year: "numeric",
+            month: "numeric",
+            day: "numeric"
+        }
+    }
+
+    constructor() {
+        super();
+    }
+
+    get id() {
+        return this.getAttribute('id') ?? "";
+    }
+
+    set id(value: string) {
+        this.setAttribute('id', value);
+    }
+
+    get title() {
+        return this.getAttribute('title') ?? "";
+    }
+
+    set title(value: string) {
+        this.setAttribute('title', value);
+    }
+
+    get imageURL() {
+        return this.getAttribute('imageURL') ?? "";
+    }
+
+    set imageURL(value: string) {
+        this.setAttribute('imageURL', value);
+    }
+
+    get createdAt() {
+        return this.getAttribute('createdAt') ?? "";
+    }
+
+    set createdAt(value: string) {
+        this.setAttribute('createdAt', value);
+    }
+
+    get articleType() {
+        return this.getAttribute('articleType') ?? "";
+    }
+
+    set articleType(value: string) {
+        this.setAttribute('articleType', value);
+    }
+
+    get articleDescription() {
+        return this.getAttribute('articleDescription') ?? "";
+    }
+
+    set articleDescription(value: string) {
+        this.setAttribute('articleDescription', value);
+    }
+
+    connectedCallback() {
+        const wrapper = document.createElement("a");
+        wrapper.href = `${import.meta.env.BASE_URL}actualites/${this.id}`;
+        wrapper.title = `Voir l'article numéro ${this.id}`;
+        wrapper.tabIndex = 0;
+
+        const article = document.createElement("article");
+        article.classList.add("flex", "flex-col", "gap-8");
+
+        const title = document.createElement("span");
+        title.textContent = this.title;
+        title.classList.add("text-xl", "font-bold");
+
+        const image = document.createElement("img");
+        image.src = this.imageURL;
+        image.alt = `Image article ${this.title}`;
+        image.classList.add("rounded-xl");
+
+        const subtitleWrapper = document.createElement("div");
+        subtitleWrapper.classList.add("flex", "max-md:flex-col", "max-md:gap-3", "md:justify-between");
+
+        const creationDate = document.createElement("span");
+        creationDate.textContent = new Date(this.createdAt).toLocaleDateString(
+            this.DATE_FORMAT.locales,
+            this.DATE_FORMAT.options,
+        );
+        creationDate.classList.add("max-md:text-sm", "italic");
+
+        const articleType = document.createElement("span");
+        articleType.textContent = this.articleType;
+        articleType.classList.add(
+            "max-md:text-sm",
+            "w-min",
+            "font-bold",
+            "px-3",
+            "rounded-full",
+            "align-middle",
+            "text-white",
+            (() => {
+                switch (this.articleType) {
+                    case "Actualité":
+                        return "bg-green-900";
+                    case "Evènement":
+                        return "bg-amber-800";
+                    case "Article":
+                        return "bg-red-500";
+                    default:
+                        return "bg-blue-500";
+                }
+            })()
+        );
+
+        const articleDescription = document.createElement("p");
+        articleDescription.textContent = this.articleDescription;
+        articleDescription.classList.add("text-justify");
+
+        // append to wrappers and main component
+
+        wrapper.appendChild(article);
+
+        article.appendChild(title);
+        article.appendChild(image);
+
+        subtitleWrapper.appendChild(creationDate);
+        subtitleWrapper.appendChild(articleType);
+
+        article.appendChild(subtitleWrapper);
+        article.appendChild(articleDescription);
+
+        this.appendChild(wrapper);
+    }
+
+
+}

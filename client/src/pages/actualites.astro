@@ -2,7 +2,6 @@
 import BaseLayout from "@/layout/baseLayout.astro";
 import type Article from "../interfaces/article";
 import fetchApi from "@/lib/strapi";
-import ArticlePreview from "../components/articlePreview.astro";
 
 const articles = await fetchApi<Article[]>({
     endpoint: 'articles',
@@ -10,7 +9,8 @@ const articles = await fetchApi<Article[]>({
     query: {
         populate: "*",
         "pagination[page]": "1",
-        "pagination[pageSize]": "6"
+        "pagination[pageSize]": "6",
+        "sort[0]": "createdAt:desc"
     }
 })
 ---
@@ -18,54 +18,19 @@ const articles = await fetchApi<Article[]>({
 <script>
     import fetchApi from "../lib/strapi";
     import type Article from "../interfaces/article";
+    import type ArticlePreview from "../components/web-components/articlePreview";
 
     let lastScrolledPage = 1;
 
-    function createArticlePreviewComponent(article: Article): Element {
-        const placeholder = document.createElement('div');
-        placeholder.innerHTML = `
-            <a href="${import.meta.env.BASE_URL}/actualites/${article.id}"} title="Voir l'article numéro ${article.id}" tabindex="0">
-                <article class="flex flex-col gap-8">
-                    <span class="text-xl font-bold">${article.attributes.titre}</span>
-                    <Image
-                            src=${import.meta.env.PUBLIC_STRAPI_URL + article.attributes.image.data.attributes.url}
-                            alt$={"Image article " + article.attributes.titre}
-                            class="rounded-xl"
-                            inferSize
-                    />
-                    <div class="flex max-md:flex-col max-md:gap-3 md:justify-between">
-                        <span class="max-md:text-sm italic">${
-                            new Date(article.attributes.createdAt)
-                                .toLocaleDateString(
-                                    "fr-FR",
-                                    {
-                                        year: "numeric",
-                                        month: "numeric",
-                                        day: "numeric"
-                                    }
-                                )
-                        }</span>
-                        <span class="max-md:text-sm w-min font-bold px-3 rounded-full align-middle ${
-                        (() => {
-                            switch (article.attributes.etiquette) {
-                                case "Actualité":
-                                    return "bg-green-900 text-white";
-                                case "Evènement":
-                                    return "bg-amber-800 text-white";
-                                case "Article":
-                                    return "bg-red-500 text-white";
-                                default:
-                                    return "bg-blue-500 text-white";
-                            }
-                        })()
-                    }">${article.attributes.etiquette}</span>
-                    </div>
-                    <p class="text-justify">${article.attributes.description}</p>
-                </article>
-            </a>
-        `;
-        if(!placeholder.firstElementChild) throw new Error("element child not found");
-        return placeholder.firstElementChild;
+    function createArticlePreviewComponent(article: Article): ArticlePreview {
+        const articlePreviewElement: ArticlePreview = document.createElement("article-preview") as ArticlePreview;
+        articlePreviewElement.id = String(article.id);
+        articlePreviewElement.title = article.attributes.titre;
+        articlePreviewElement.articleType = article.attributes.etiquette;
+        articlePreviewElement.articleDescription = article.attributes.description;
+        articlePreviewElement.createdAt = article.attributes.createdAt;
+        articlePreviewElement.imageURL = `${import.meta.env.PUBLIC_STRAPI_URL}${article.attributes.image.data.attributes.url}`;
+        return articlePreviewElement;
     }
 
 
@@ -78,7 +43,8 @@ const articles = await fetchApi<Article[]>({
             query: {
                 populate: "*",
                 "pagination[page]": String(lastScrolledPage),
-                "pagination[pageSize]": "6"
+                "pagination[pageSize]": "6",
+                "sort[0]": "createdAt:desc"
             }
         }).then((articles: Article[]) => {
             articles.forEach(article => {
@@ -99,7 +65,14 @@ const articles = await fetchApi<Article[]>({
         <div id="article-list-wrapper" class="grid gap-x-20 gap-y-10 lg:gap-y-20 grid-cols-1 md:grid-cols-3">
             {
                 articles.map((article) => (
-                        <ArticlePreview article={article}/>
+                        <article-preview
+                            id={article.id}
+                            title={article.attributes.titre}
+                            articleType={article.attributes.etiquette}
+                            articleDescription={article.attributes.description}
+                            createdAt={article.attributes.createdAt}
+                            imageURL={import.meta.env.PUBLIC_STRAPI_URL + article.attributes.image.data.attributes.url}
+                        />
                 ))
             }
         </div>
