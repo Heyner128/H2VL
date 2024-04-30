@@ -3,13 +3,19 @@ module.exports = {
     name   : "H2VL cms",
     script : "npm",
     args: "start",
-    cwd: "./cms"
+    cwd: "./cms",
+    env: {
+      NODE_ENV: "production",
+    }
   },
   {
     name   : "H2VL client",
     script : "npm",
     args: "start",
-    cwd: "./client"
+    cwd: "./client",
+    env: {
+      NODE_ENV: "production",
+    }
   }
 ]
 }
