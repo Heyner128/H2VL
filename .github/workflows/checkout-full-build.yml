@@ -1,8 +1,7 @@
 name: Client page build with checkout
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 */1 * * *"
+  push:
 
 jobs:
   build:
