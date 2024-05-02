@@ -1,0 +1,15 @@
+name: Client page build without checkout
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */1 * * *"
+
+jobs:
+  build:
+    runs-on: self-hosted
+    defaults:
+      run:
+        working-directory: /home/heyner/H2VL
+    steps:
+      - name: Build client
+        run: npm run build  -w=client

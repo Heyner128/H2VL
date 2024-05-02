@@ -89,7 +89,7 @@ const { title }  = Astro.props || {};
             <a class="h-full w-auto" href="/">
                 <div class="flex gap-4">
                     <img class="h-16 py-3" src={logoReference.src} alt="logo" />
-                    <span class="font-bold self-center">Handicap Visuel Val de Loire</span>
+                    <h1 class="font-bold self-center">Handicap Visuel Val de Loire</h1>
                 </div>
             </a>
             <NavigationBar />
@@ -99,7 +99,7 @@ const { title }  = Astro.props || {};
         </main>
         <div id="newsletter-wrapper" class="flex w-full justify-center">
             <section class="flex flex-col gap-10 p-7 max-w-[2000px] w-full">
-                <span class="text-2xl font-bold">S&apos;abonner à notre lettre d&apos;informations</span>
+                <h2 class="text-2xl font-bold">S&apos;abonner à notre lettre d&apos;informations</h2>
                 <div class="flex max-lg:flex-col-reverse gap-5 justify-evenly">
                     <form id="newsletter-form" class="self-center flex flex-col gap-10" novalidate>
                         <fieldset class="flex max-md:flex-col md:gap-8 max-md:gap-5">
@@ -125,7 +125,7 @@ const { title }  = Astro.props || {};
         <footer class="flex w-full justify-center bg-gradient-to-r from-blue-600 to-blue-400 text-white">
             <div class="flex max-md:flex-col max-md:gap-7 justify-between w-full p-7 max-w-[2000px]">
                 <div class="flex flex-col gap-7">
-                    <span class="text-2xl font-bold">Contact</span>
+                    <h2 class="text-2xl font-bold">Contact</h2>
                     <div class="flex flex-col gap-1">
                         <span>{contactInformation.attributes.adresse}</span>
                         <span>{contactInformation.attributes.code_postal} {contactInformation.attributes.ville.toUpperCase()}</span>

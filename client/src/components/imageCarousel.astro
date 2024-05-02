@@ -7,6 +7,8 @@ const ARTICLES_TO_SHOW = Math.min(maxArticles, articles.length);
 
 ---
 <script>
+    import swipeDetect from "../lib/swipe";
+
     let activeImage = 1;
 
 
@@ -59,7 +61,25 @@ const ARTICLES_TO_SHOW = Math.min(maxArticles, articles.length);
 
     const nextButton: Element | null = document.querySelector("#carousel-button-next");
 
-    nextButton?.addEventListener("click", nextButtonClickHandler)
+    nextButton?.addEventListener("click", nextButtonClickHandler);
+
+    const scrollWrapper: Element | null = document.querySelector("#carousel-scroll-wrapper");
+
+    if(scrollWrapper !== null) swipeDetect(
+        scrollWrapper as HTMLElement,
+        (swipeDirection) => {
+            switch(swipeDirection) {
+                case 'left':
+                    nextButtonClickHandler();
+                    break;
+                case 'right':
+                    beforeButtonClickHandler();
+                    break;
+                default:
+                    break;
+            }
+        }
+    );
 
     highlightButton(activeImage);
 </script>
@@ -75,7 +95,7 @@ const ARTICLES_TO_SHOW = Math.min(maxArticles, articles.length);
                             inferSize
                         />
                         <div class="flex flex-col gap-2 self-center lg:pl-20 w-fit ">
-                            <span class="font-bold text-2xl max-md:text-lg">{article.attributes.titre}</span>
+                            <h2 class="font-bold text-2xl max-md:text-lg">{article.attributes.titre}</h2>
                             <span class="text-lg max-md:text-sm">{article.attributes.description}</span>
                             <a href={`${import.meta.env.BASE_URL}actualites/${article.id}`}><span class="max-md:text-sm text-blue-500 underline">Voir l&apos;article</span></a>
                         </div>

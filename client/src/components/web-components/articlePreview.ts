@@ -63,26 +63,37 @@ export default class ArticlePreview extends HTMLElement {
         this.setAttribute('articleDescription', value);
     }
 
-    connectedCallback() {
+    private wrapInAnchorElement(element: HTMLElement): HTMLAnchorElement {
         const wrapper = document.createElement("a");
         wrapper.href = `${import.meta.env.BASE_URL}actualites/${this.id}`;
         wrapper.title = `Voir l'article numéro ${this.id}`;
         wrapper.tabIndex = 0;
 
+        wrapper.appendChild(element);
+
+        return wrapper;
+    }
+
+    connectedCallback() {
+
+
         const article = document.createElement("article");
         article.classList.add("flex", "flex-col", "gap-8");
 
-        const title = document.createElement("span");
+        const title = document.createElement("h3");
         title.textContent = this.title;
         title.classList.add("text-xl", "font-bold");
 
-        const image = document.createElement("img");
+        let image: HTMLImageElement = document.createElement("img");
         image.src = this.imageURL;
         image.alt = `Image article ${this.title}`;
         image.classList.add("rounded-xl");
 
-        const subtitleWrapper = document.createElement("div");
+
+        let subtitleWrapper = document.createElement("div");
         subtitleWrapper.classList.add("flex", "max-md:flex-col", "max-md:gap-3", "md:justify-between");
+
+
 
         const creationDate = document.createElement("span");
         creationDate.textContent = new Date(this.createdAt).toLocaleDateString(
@@ -115,24 +126,31 @@ export default class ArticlePreview extends HTMLElement {
             })()
         );
 
-        const articleDescription = document.createElement("p");
+        let articleDescription = document.createElement("p");
         articleDescription.textContent = this.articleDescription;
         articleDescription.classList.add("text-justify");
 
+        // wraps on anchor element
+        articleDescription = this.wrapInAnchorElement(articleDescription) as unknown as HTMLDivElement;
+
         // append to wrappers and main component
 
-        wrapper.appendChild(article);
-
         article.appendChild(title);
+
+        //wraps on anchor element
+        image = this.wrapInAnchorElement(image) as unknown as HTMLImageElement;
         article.appendChild(image);
 
         subtitleWrapper.appendChild(creationDate);
         subtitleWrapper.appendChild(articleType);
 
+        // wraps on anchor element
+        subtitleWrapper = this.wrapInAnchorElement(subtitleWrapper) as unknown as HTMLDivElement;
+
         article.appendChild(subtitleWrapper);
         article.appendChild(articleDescription);
 
-        this.appendChild(wrapper);
+        this.appendChild(article);
     }
 
 

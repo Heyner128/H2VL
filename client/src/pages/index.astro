@@ -24,7 +24,7 @@ const articles = await fetchApi<Article[]>({
   </div>
   <div id="articles-preview-wrapper" class="flex w-full justify-center bg-gray-100">
     <section class="flex flex-col gap-10 mt-5 p-7 max-w-[2000px]">
-      <span class="text-2xl font-bold">Actualités</span>
+      <h2 class="text-2xl font-bold">Actualités</h2>
       <div class="grid gap-x-20 gap-y-10 lg:gap-y-20 grid-cols-1 md:grid-cols-3">
         {
           articles.map((article) => (
@@ -44,7 +44,7 @@ const articles = await fetchApi<Article[]>({
   </div>
   <div id="missions-wrapper" class="flex w-full justify-center bg-gradient-to-r from-blue-600 to-blue-400">
     <section class="text-white flex flex-col gap-10 p-7 max-w-[2000px] w-full">
-      <span class="text-2xl font-bold">Nos missions</span>
+      <h2 class="text-2xl font-bold">Nos missions</h2>
       <div class="flex flex-wrap justify-evenly gap-10 max-md:gap-7 my-10">
         <div class="flex flex-col items-center gap-5">
           <span class="material-symbols-outlined flex justify-center items-center text-5xl max-md:text-4xl max-md:size-16 size-20 text-green-300">settings_accessibility</span>
