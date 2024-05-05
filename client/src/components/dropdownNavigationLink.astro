@@ -1,5 +1,4 @@
 ---
-import { v4 as uuid } from "uuid";
 ---
 
 <script>
@@ -7,11 +6,11 @@ import { v4 as uuid } from "uuid";
 
     class DropdownNavigationLink extends HTMLElement {
 
-        private button: HTMLElement
-        private contents: HTMLElement
-        private icon: HTMLElement
+        private readonly button: HTMLElement;
+        private readonly contents: HTMLElement;
+        private readonly icon: HTMLElement;
 
-        private isOpen: boolean;
+        private isOpen: boolean
 
         private disableAutoUpdate = () => {};
 
@@ -19,16 +18,21 @@ import { v4 as uuid } from "uuid";
 
         constructor() {
             super();
+            const buttonSelector: HTMLElement | null = this.querySelector(".dropdown-button");
+            const contentSelector: HTMLElement | null = this.querySelector(".dropdown-contents");
+            const iconSelector: HTMLElement | null =  this.querySelector(".material-symbols-outlined");
+            if(buttonSelector === null || contentSelector === null || iconSelector === null)
+                throw new Error("ArticleList component HTML structure error");
+
+            this.button = buttonSelector;
+            this.contents = contentSelector;
+            this.icon = iconSelector;
+
+            this.isOpen = !this.contents.classList.contains('hidden');
         }
 
         connectedCallback() {
-
-            this.button = this.querySelector(".dropdown-button");
-            this.contents = this.querySelector(".dropdown-contents");
-            this.icon = this.querySelector(".material-symbols-outlined");
-
-            this.isOpen = !this.contents.classList.contains('hidden');
-
+            if(!this.button || !this.contents || this.icon) throw new Error("Article list HTML structure error");
             this.button.addEventListener('click', () => {
                 if(this.isOpen) {
                     this.hideContents();

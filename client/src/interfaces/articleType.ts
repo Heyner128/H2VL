@@ -1,4 +1,4 @@
-export interface ArticleType {
+export default interface ArticleType {
     id: number;
     attributes: {
         value: string;

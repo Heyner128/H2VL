@@ -40,7 +40,8 @@ const articles = await fetchApi<Article[]>({
     const intersectionObserver = new IntersectionObserver(entries => {
         if(entries[0].intersectionRatio <=0) return;
         lastScrolledPage++;
-        const type = new URL(document.URL).pathname.match(/\w+$/)[0];
+        const type:string | undefined = Array.from(new URL(document.URL).pathname.match(/\w+$/) ?? []).at(0);
+        if(!type) return;
         fetchApi<Article[]>({
             endpoint: 'articles',
             wrappedByKey: 'data',
@@ -49,7 +50,7 @@ const articles = await fetchApi<Article[]>({
                 "pagination[page]": String(lastScrolledPage),
                 "pagination[pageSize]": "6",
                 "sort[0]": "createdAt:desc",
-                "filters[type_d_article][value][$eq]": type !== "nouveautes" ? type : undefined
+                "filters[type_d_article][value][$eq]": type !== "nouveautes" ? type : ""
             }
         }).then((articles: Article[]) => {
             articles.forEach(article => {

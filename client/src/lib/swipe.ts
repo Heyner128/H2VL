@@ -6,7 +6,7 @@ export default function swipeDetect(element: HTMLElement, callback: (direction: 
     const threshold: number = 70;
     const restraint: number = 100;
     const allowedTime: number = 300;
-    const handleSwipe = callback || function(swipeDirection){}
+    const handleSwipe = callback || function(){}
 
     let swipeDirection: SwipeDirection = 'none';
     let startX: number = 0;

@@ -8,6 +8,7 @@
   "scripts": {
     "astro": "astro",
     "build": "astro check && astro build",
+    "lint": "astro check",
     "dev": "astro dev",
     "preview": "astro preview",
     "start": "node ./dist/server/entry.mjs"

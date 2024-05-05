@@ -8,8 +8,11 @@
     "client",
     "cms"
   ],
-  "scripts": {
-    "build": "npm run build --workspace=cms && npm run build --workspace=client"
+  "email": "me@heyner.me",
+  "devDependencies": {
+    "husky": "^9.0.11"
   },
-  "email": "me@heyner.me"
+  "scripts": {
+    "prepare": "husky"
+  }
 }

@@ -15,7 +15,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Set node into production mode
-        run: export NODE_ENV="production"
+        run: export NODE_ENV=production
       - name: Build cms
         run: npm run build -w=cms
       - name: Build client
