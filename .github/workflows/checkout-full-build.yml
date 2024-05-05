@@ -15,10 +15,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build cms
-        run: npm run build -w=cms
+        run: rm -rf ./cms/dist && npm run build -w=cms
       - name: Restart cms
         run: pm2 restart ecosystem.config.js --only cms
       - name: Build client
-        run: npm run build -w=client
+        run: rm -rf ./client/dist npm run build -w=client
       - name: Restart client
         run: pm2 restart ecosystem.config.js --only client
