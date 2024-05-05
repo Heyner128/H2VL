@@ -1,0 +1,92 @@
+---
+import { v4 as uuid } from "uuid";
+---
+
+<script>
+    import { computePosition, flip, shift, offset, autoUpdate } from "@floating-ui/dom";
+
+    class DropdownNavigationLink extends HTMLElement {
+
+        private button: HTMLElement
+        private contents: HTMLElement
+        private icon: HTMLElement
+
+        private isOpen: boolean;
+
+        private disableAutoUpdate = () => {};
+
+        private MOBILE_BREAKPOINT: number = 768
+
+        constructor() {
+            super();
+        }
+
+        connectedCallback() {
+
+            this.button = this.querySelector(".dropdown-button");
+            this.contents = this.querySelector(".dropdown-contents");
+            this.icon = this.querySelector(".material-symbols-outlined");
+
+            this.isOpen = !this.contents.classList.contains('hidden');
+
+            this.button.addEventListener('click', () => {
+                if(this.isOpen) {
+                    this.hideContents();
+                } else {
+                    this.showContents();
+                }
+            });
+
+        }
+
+        private updatePosition(): void {
+
+            computePosition(
+                this.button,
+                this.contents,
+                {
+                    middleware: [offset(30), flip(), shift()]
+                }
+            ).then(({x, y}) => {
+                Object.assign(this.contents.style, {
+                    left: `${x}px`,
+                    top: `${y}px`
+                });
+            });
+        }
+
+        private showContents(): void {
+            if(window.innerWidth > this.MOBILE_BREAKPOINT) {
+                this.disableAutoUpdate = autoUpdate(
+                    this.button,
+                    this.contents,
+                    this.updatePosition.bind(this)
+                );
+            }
+            this.contents.classList.replace('hidden', 'block');
+            this.icon.innerText = "expand_less";
+            this.isOpen = true;
+        }
+
+        private hideContents(): void {
+            if(window.innerWidth > this.MOBILE_BREAKPOINT) this.disableAutoUpdate();
+            this.contents.classList.replace('block', 'hidden');
+            this.icon.innerText = "expand_more";
+            this.isOpen = false;
+        }
+    }
+
+    customElements.define('dropdown-navigation-link', DropdownNavigationLink);
+
+</script>
+
+<dropdown-navigation-link>
+    <div class="relative">
+        <button
+            class="dropdown-button"
+        ><slot name="main-text"/><span class="material-symbols-outlined not-sr-only pl-2 align-middle">expand_more</span></button>
+        <div class="dropdown-contents md:absolute md:bg-blue-400 md:p-3 md:rounded-md md:shadow-sm max-md:mt-5 hidden">
+            <slot name="dropdown-elements"/>
+        </div>
+    </div>
+</dropdown-navigation-link>

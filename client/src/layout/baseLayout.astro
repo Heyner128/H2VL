@@ -86,7 +86,7 @@ const { title }  = Astro.props || {};
         <AccesibilityMenu />
         <header class="h-16 flex justify-between align-middle bg-gradient-to-r from-blue-600 to-blue-400 text-white sticky top-0 px-5 items-center z-50">
 
-            <a class="h-full w-auto" href="/">
+            <a class="h-full w-auto" href={import.meta.env.BASE_URL}>
                 <div class="flex gap-4">
                     <img class="h-16 py-3" src={logoReference.src} alt="logo" />
                     <h1 class="font-bold self-center">Handicap Visuel Val de Loire</h1>

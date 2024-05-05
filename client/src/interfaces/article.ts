@@ -5,7 +5,13 @@ export default interface Article {
     contenu: string;
     description: string;
     createdAt: string;
-    etiquette: string;
+    "type_d_article": {
+      data: {
+        attributes: {
+          value: string
+        }
+      }
+    }
     image: {
       data: {
         attributes: {

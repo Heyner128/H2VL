@@ -1,0 +1,30 @@
+---
+import fetchApi from "@/lib/strapi";
+import {ArticleType} from "@/interfaces/articleType";
+import BaseLayout from "@/layout/baseLayout.astro";
+import ArticleList from "@/components/articleList.astro";
+import sanitizeToURL, {sanitizationHistory} from "@/lib/sanitize";
+
+export async function getStaticPaths() {
+    const articleTypes = await fetchApi<ArticleType[]>({
+        endpoint: 'article-types',
+        query: {
+            populate: '*'
+        },
+        wrappedByKey: 'data',
+    });
+
+    return articleTypes.map((articleType) => ({
+        params: { type: sanitizeToURL(articleType.attributes.value) }
+    }));
+}
+
+
+const { type: sanitizedType } = Astro.params;
+
+const type  = sanitizationHistory[sanitizedType];
+---
+
+<BaseLayout title={type} - H2VL`}>
+    <ArticleList type={type}/>
+</BaseLayout>

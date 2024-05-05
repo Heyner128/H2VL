@@ -65,7 +65,7 @@ export default class ArticlePreview extends HTMLElement {
 
     private wrapInAnchorElement(element: HTMLElement): HTMLAnchorElement {
         const wrapper = document.createElement("a");
-        wrapper.href = `${import.meta.env.BASE_URL}actualites/${this.id}`;
+        wrapper.href = `${import.meta.env.BASE_URL}nouveautes/${this.id}`;
         wrapper.title = `Voir l'article numéro ${this.id}`;
         wrapper.tabIndex = 0;
 
@@ -114,11 +114,11 @@ export default class ArticlePreview extends HTMLElement {
             "text-white",
             (() => {
                 switch (this.articleType) {
-                    case "Actualité":
+                    case "Actualités":
                         return "bg-green-900";
-                    case "Evènement":
+                    case "Evènements":
                         return "bg-amber-800";
-                    case "Article":
+                    case "Articles":
                         return "bg-red-500";
                     default:
                         return "bg-blue-500";

@@ -805,8 +805,10 @@ export interface ApiArticleArticle extends Schema.CollectionType {
     image: Attribute.Media & Attribute.Required;
     pieces_jointes: Attribute.Media;
     contenu: Attribute.RichText & Attribute.Required;
-    etiquette: Attribute.Enumeration<
-      ['Actualit\u00E9', 'Ev\u00E8nement', 'Article']
+    type_d_article: Attribute.Relation<
+      'api::article.article',
+      'oneToOne',
+      'api::article-type.article-type'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -819,6 +821,35 @@ export interface ApiArticleArticle extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::article.article',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiArticleTypeArticleType extends Schema.CollectionType {
+  collectionName: 'article_types';
+  info: {
+    singularName: 'article-type';
+    pluralName: 'article-types';
+    displayName: "Type d'article";
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    value: Attribute.String & Attribute.Required & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::article-type.article-type',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::article-type.article-type',
       'oneToOne',
       'admin::user'
     > &
@@ -921,6 +952,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::article.article': ApiArticleArticle;
+      'api::article-type.article-type': ApiArticleTypeArticleType;
       'api::coordonnees.coordonnees': ApiCoordonneesCoordonnees;
       'api::texte-association.texte-association': ApiTexteAssociationTexteAssociation;
     }

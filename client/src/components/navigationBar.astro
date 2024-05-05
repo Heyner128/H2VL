@@ -1,3 +1,17 @@
+---
+import DropdownNavigationLink from "./dropdownNavigationLink.astro";
+import fetchApi from "@/lib/strapi";
+import {ArticleType} from "@/interfaces/articleType";
+import sanitizeToURL from "../lib/sanitize";
+
+const articleTypes: string[] = await fetchApi<ArticleType[]>({
+    endpoint: 'article-types',
+    query: {
+        populate: '*'
+    },
+    wrappedByKey: 'data',
+}).then(articleTypes => articleTypes.map(at  => at.attributes.value));
+---
 <script>
     const navMenuClickHandler = (event: Event) => {
         event.preventDefault();
@@ -34,8 +48,20 @@
         <ul class="max-md:absolute max-md:right-0 flex max-md:flex-col gap-10 max-md:bg-gradient-to-r max-md:from-blue-500 max-md:to-blue-400 max-md:h-dvh max-md:w-[50dvw] max-md:text-center max-md:pt-3">
             <li class={new RegExp(`${import.meta.env.BASE_URL}$`).test(Astro.url.pathname)?"font-bold underline underline-offset-[0.5rem]":""}><a href={`${import.meta.env.BASE_URL}`}>Accueil</a></li>
             <li class={/association/.test(Astro.url.pathname)?"font-bold underline underline-offset-[0.5rem]":""}><a href={`${import.meta.env.BASE_URL}association`}>L&apos;association</a></li>
-            <li class={/actualites/.test(Astro.url.pathname)?"font-bold underline underline-offset-[0.5rem]":""}><a href={`${import.meta.env.BASE_URL}actualites`}>Actualités</a></li>
+            <DropdownNavigationLink>
+                <span class={/nouveautes/.test(Astro.url.pathname)?"font-bold underline underline-offset-[0.5rem]":""} slot="main-text">Nouveautés</span>
+                <ul slot="dropdown-elements" class="flex flex-col max-md:gap-5 gap-4">
+                    {
+                        articleTypes.map(
+                            articleType => <li class={new RegExp(sanitizeToURL(articleType)).test(Astro.url.pathname)?"font-bold underline underline-offset-[0.5rem]":""}>
+                                <a href={`${import.meta.env.BASE_URL}nouveautes/${sanitizeToURL(articleType)}`}>{articleType}</a>
+                            </li>
+                        )
+                    }
+                </ul>
+            </DropdownNavigationLink>
             <li class={/contact/.test(Astro.url.pathname)?"font-bold underline underline-offset-[0.5rem]":""}><a href={`${import.meta.env.BASE_URL}contact`}>Contact</a></li>
+
         </ul>
     </div>
 </nav>

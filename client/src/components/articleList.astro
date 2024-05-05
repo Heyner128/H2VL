@@ -1,7 +1,9 @@
 ---
-import BaseLayout from "@/layout/baseLayout.astro";
 import type Article from "../interfaces/article";
 import fetchApi from "@/lib/strapi";
+
+const { type } = Astro.props;
+
 
 const articles = await fetchApi<Article[]>({
     endpoint: 'articles',
@@ -10,7 +12,8 @@ const articles = await fetchApi<Article[]>({
         populate: "*",
         "pagination[page]": "1",
         "pagination[pageSize]": "6",
-        "sort[0]": "createdAt:desc"
+        "sort[0]": "createdAt:desc",
+        "filters[type_d_article][value][$eq]": type
     }
 })
 ---
@@ -26,7 +29,7 @@ const articles = await fetchApi<Article[]>({
         const articlePreviewElement: ArticlePreview = document.createElement("article-preview") as ArticlePreview;
         articlePreviewElement.id = String(article.id);
         articlePreviewElement.title = article.attributes.titre;
-        articlePreviewElement.articleType = article.attributes.etiquette;
+        articlePreviewElement.articleType = article.attributes.type_d_article.data.attributes.value ?? "Nouveauté";
         articlePreviewElement.articleDescription = article.attributes.description;
         articlePreviewElement.createdAt = article.attributes.createdAt;
         articlePreviewElement.imageURL = `${import.meta.env.PUBLIC_STRAPI_URL}${article.attributes.image.data.attributes.url}`;
@@ -37,6 +40,7 @@ const articles = await fetchApi<Article[]>({
     const intersectionObserver = new IntersectionObserver(entries => {
         if(entries[0].intersectionRatio <=0) return;
         lastScrolledPage++;
+        const type = new URL(document.URL).pathname.match(/\w+$/)[0];
         fetchApi<Article[]>({
             endpoint: 'articles',
             wrappedByKey: 'data',
@@ -44,7 +48,8 @@ const articles = await fetchApi<Article[]>({
                 populate: "*",
                 "pagination[page]": String(lastScrolledPage),
                 "pagination[pageSize]": "6",
-                "sort[0]": "createdAt:desc"
+                "sort[0]": "createdAt:desc",
+                "filters[type_d_article][value][$eq]": type !== "nouveautes" ? type : undefined
             }
         }).then((articles: Article[]) => {
             articles.forEach(article => {
@@ -59,25 +64,22 @@ const articles = await fetchApi<Article[]>({
     intersectionObserver.observe(scrollTarget);
 </script>
 
-<BaseLayout title="Notre Association - H2VL">
-    <section id="main-content-wrapper" class="flex flex-col gap-8 p-5 max-w-[2000px]">
-        <h2 class="font-bold text-2xl">Actualités</h2>
-        <div id="article-list-wrapper" class="grid gap-x-20 gap-y-10 lg:gap-y-20 grid-cols-1 md:grid-cols-3">
-            {
-                articles.map((article) => (
-                        <article-preview
-                            id={article.id}
-                            title={article.attributes.titre}
-                            articleType={article.attributes.etiquette}
-                            articleDescription={article.attributes.description}
-                            createdAt={article.attributes.createdAt}
-                            imageURL={import.meta.env.PUBLIC_STRAPI_URL + article.attributes.image.data.attributes.url}
-                        />
-                ))
-            }
-        </div>
-        <div id="infinite-scroll-target" class="w-full h-10 bg-transparent">
-        </div>
-    </section>
-
-</BaseLayout>
+<section id="main-content-wrapper" class="flex flex-col gap-8 p-5 max-w-[2000px]">
+    <h2 class="font-bold text-2xl">{type ?? "Nouveautés"}</h2>
+    <div id="article-list-wrapper" class="grid gap-x-20 gap-y-10 lg:gap-y-20 grid-cols-1 md:grid-cols-3">
+        {
+            articles.map((article) => (
+                    <article-preview
+                        id={article.id}
+                        title={article.attributes.titre}
+                        articleType={article.attributes.type_d_article.data.attributes.value ?? "Nouveauté"}
+                        articleDescription={article.attributes.description}
+                        createdAt={article.attributes.createdAt}
+                        imageURL={import.meta.env.PUBLIC_STRAPI_URL + article.attributes.image.data.attributes.url}
+                    />
+            ))
+        }
+    </div>
+    <div id="infinite-scroll-target" class="w-full h-10 bg-transparent">
+    </div>
+</section>

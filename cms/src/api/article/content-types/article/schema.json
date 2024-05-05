@@ -29,26 +29,24 @@
       ]
     },
     "pieces_jointes": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
     "contenu": {
       "type": "richtext",
       "required": true
     },
-    "etiquette": {
-      "type": "enumeration",
-      "enum": [
-        "Actualité",
-        "Evènement",
-        "Article"
-      ]
+    "type_d_article": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::article-type.article-type"
     }
   }
 }
