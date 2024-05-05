@@ -29,7 +29,7 @@ const articles = await fetchApi<Article[]>({
         const articlePreviewElement: ArticlePreview = document.createElement("article-preview") as ArticlePreview;
         articlePreviewElement.id = String(article.id);
         articlePreviewElement.title = article.attributes.titre;
-        articlePreviewElement.articleType = article.attributes.type_d_article.data.attributes.value ?? "Nouveauté";
+        articlePreviewElement.articleType = article.attributes.type_d_article?.data?.attributes?.value ?? "Nouveauté";
         articlePreviewElement.articleDescription = article.attributes.description;
         articlePreviewElement.createdAt = article.attributes.createdAt;
         articlePreviewElement.imageURL = `${import.meta.env.PUBLIC_STRAPI_URL}${article.attributes.image.data.attributes.url}`;
@@ -73,7 +73,7 @@ const articles = await fetchApi<Article[]>({
                     <article-preview
                         id={article.id}
                         title={article.attributes.titre}
-                        articleType={article.attributes.type_d_article.data.attributes.value ?? "Nouveauté"}
+                        articleType={article.attributes.type_d_article?.data?.attributes?.value ?? "Nouveauté"}
                         articleDescription={article.attributes.description}
                         createdAt={article.attributes.createdAt}
                         imageURL={import.meta.env.PUBLIC_STRAPI_URL + article.attributes.image.data.attributes.url}
