@@ -19,6 +19,6 @@ jobs:
       - name: Restart cms
         run: pm2 restart ecosystem.config.js --only cms
       - name: Build client
-        run: rm -rf ./client/dist npm run build -w=client
+        run: rm -rf ./client/dist && npm run build -w=client
       - name: Restart client
         run: pm2 restart ecosystem.config.js --only client
