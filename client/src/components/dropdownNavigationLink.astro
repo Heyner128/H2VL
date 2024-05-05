@@ -32,7 +32,6 @@
         }
 
         connectedCallback() {
-            if(!this.button || !this.contents || this.icon) throw new Error("Article list HTML structure error");
             this.button.addEventListener('click', () => {
                 if(this.isOpen) {
                     this.hideContents();
