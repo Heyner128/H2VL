@@ -116,7 +116,7 @@ export default class ArticlePreview extends HTMLElement {
                 switch (this.articleType) {
                     case "Actualités":
                         return "bg-green-900";
-                    case "Evènements":
+                    case "Évènements":
                         return "bg-amber-800";
                     case "Articles":
                         return "bg-red-500";
