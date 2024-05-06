@@ -17,12 +17,12 @@ jobs:
       - name: Build cms
         run: rm -rf ./cms/dist && npm run build -w=cms
       - name: Restart cms
-        run: pm2 restart ecosystem.config.js --only "H2VL cms"
+        run: pm2 restart "H2VL cms"
       - name: Build utils api
         run: rm -rf ./utils-api/dist && npm run build -w=utils-api
       - name: Restart utils api
-        run: pm2 restart ecosystem.config.js --only "H2VL utils api"
+        run: pm2 restart "H2VL utils api"
       - name: Build client
         run: rm -rf ./client/dist && npm run build -w=client
       - name: Restart client
-        run: pm2 restart ecosystem.config.js --only "H2VL client"
+        run: pm2 restart "H2VL client"
