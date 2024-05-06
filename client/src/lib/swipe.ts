@@ -1,4 +1,4 @@
-type SwipeDirection = 'right' | 'left' | 'none';
+export type SwipeDirection = 'right' | 'left' | 'none';
 
 export default function swipeDetect(element: HTMLElement, callback: (direction: SwipeDirection) => void) {
 
