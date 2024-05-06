@@ -7,7 +7,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node build/index.js",
+    "start": "node dist/index.js",
     "dev": "nodemon",
     "lint": "eslint --cache",
     "lint:fix": "eslint --fix"
