@@ -91,7 +91,7 @@ export default class ArticlePreview extends HTMLElement {
 
 
         let subtitleWrapper = document.createElement("div");
-        subtitleWrapper.classList.add("flex", "max-md:flex-col", "max-md:gap-3", "md:justify-between");
+        subtitleWrapper.classList.add("flex", "justify-between");
 
 
 
