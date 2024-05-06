@@ -6,7 +6,8 @@
   "author": "Heyner Cuevas",
   "workspaces": [
     "client",
-    "cms"
+    "cms",
+    "utils-api"
   ],
   "email": "me@heyner.me",
   "devDependencies": {

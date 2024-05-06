@@ -1,0 +1,36 @@
+{
+  "name": "utils-api",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Utilities API for H2VL page",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node build/index.js",
+    "dev": "nodemon",
+    "lint": "eslint --cache",
+    "lint:fix": "eslint --fix"
+  },
+  "author": "Heyner Cuevas",
+  "devDependencies": {
+    "@eslint/js": "^9.2.0",
+    "@types/node": "^20.12.8",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "globals": "^15.1.0",
+    "nodemon": "^3.1.0",
+    "prettier": "3.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.8.0"
+  },
+  "dependencies": {
+    "@fastify/type-provider-typebox": "^4.0.0",
+    "@sinclair/typebox": "^0.32.29",
+    "axios": "^1.6.8",
+    "dotenv": "^16.4.5",
+    "fastify": "^4.26.2",
+    "winston": "^3.13.0"
+  }
+}

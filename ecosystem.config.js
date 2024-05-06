@@ -16,6 +16,15 @@ module.exports = {
     env: {
       NODE_ENV: "production",
     }
+  },
+  {
+    name   : "H2VL utils api",
+    script : "npm",
+    args: "start",
+    cwd: "./utils-api",
+    env: {
+      NODE_ENV: "production",
+    }
   }
 ]
 }
