@@ -27,7 +27,6 @@ export class WebhookController {
         ref: 'main',
       },
     };
-
-    return this.httpService.request(githubRequestConfig);
+    this.httpService.request(githubRequestConfig);
   }
 }
