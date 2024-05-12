@@ -7,7 +7,8 @@
   "workspaces": [
     "client",
     "cms",
-    "utils-api"
+    "utils-api",
+    "shared"
   ],
   "email": "me@heyner.me",
   "devDependencies": {

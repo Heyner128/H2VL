@@ -1,5 +1,16 @@
 import axios from "axios";
 
+declare global {
+  interface ImportMeta {
+    env: {
+      PUBLIC_STRAPI_URL: string;
+      PUBLIC_STRAPI_API_TOKEN: string;
+    }
+  }
+}
+
+const { PUBLIC_STRAPI_URL, PUBLIC_STRAPI_API_TOKEN } =  import.meta?.env || process.env;
+
 interface Props {
   endpoint: string;
   query?: Record<string, string>;
@@ -25,7 +36,7 @@ export default async function fetchApi<T>({
     endpoint = endpoint.slice(1);
   }
 
-  const url = new URL(`${import.meta.env.PUBLIC_STRAPI_URL}/api/${endpoint}`);
+  const url = new URL(`${PUBLIC_STRAPI_URL}/api/${endpoint}`);
 
   if (query) {
     Object.entries(query).forEach(([key, value]) => {
@@ -34,7 +45,7 @@ export default async function fetchApi<T>({
   }
   const res = await axios.get(url.toString(), {
     headers: {
-      Authorization: `Bearer ${import.meta.env.PUBLIC_STRAPI_API_TOKEN}`,
+      Authorization: `Bearer ${PUBLIC_STRAPI_API_TOKEN}`,
     },
   });
   let data = res.data;
