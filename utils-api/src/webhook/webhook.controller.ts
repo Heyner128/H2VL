@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Post } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { AxiosRequestConfig } from 'axios';
@@ -10,7 +10,7 @@ export class WebhookController {
     private readonly configService: ConfigService,
   ) {}
 
-  @Get()
+  @Post()
   async sendGithubActionRequest() {
     const githubRequestConfig: AxiosRequestConfig<{
       ref: string;
