@@ -9,7 +9,7 @@ declare global {
   }
 }
 
-const { PUBLIC_STRAPI_URL, PUBLIC_STRAPI_API_TOKEN } =  import.meta?.env || process.env;
+const { PUBLIC_STRAPI_URL, PUBLIC_STRAPI_API_TOKEN } =  import.meta.env || process.env;
 
 interface Props {
   endpoint: string;

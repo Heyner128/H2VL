@@ -16,9 +16,7 @@ export default defineConfig({
     host: "0.0.0.0"
   },
   site: deployUrl.origin,
-  base: deployUrl.pathname.endsWith("/")?
-      deployUrl.pathname:
-      deployUrl.pathname.concat("/"),
+  base: deployUrl.pathname,
   output: "hybrid",
   adapter: node({
     mode: "standalone"
