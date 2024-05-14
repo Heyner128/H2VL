@@ -14,6 +14,7 @@ import { join } from 'node:path';
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
+      serveStaticOptions: { index: false },
     }),
     WebhookModule,
     MailModule,

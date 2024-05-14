@@ -10,7 +10,7 @@ export default function contactFormMailTemplate(
             <mj-section>
               <mj-column>
         
-                <mj-image width="100px" src=${`${process.env.HOSTNAME_URL}/public/logo.png`}></mj-image>
+                <mj-image width="100px" src=${`${process.env.HOSTNAME_URL}/static/logo.png`}></mj-image>
         
                 <mj-divider border-color="#6189E0"></mj-divider>
                 
