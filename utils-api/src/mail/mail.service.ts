@@ -6,10 +6,8 @@ import Mail from 'nodemailer/lib/mailer';
 
 @Injectable()
 export class MailService {
-  private readonly smtpTransport: nodemailer.Transporter<SMTPTransport.SentMessageInfo>
-  constructor(
-    private readonly configService: ConfigService,
-  ) {
+  private readonly smtpTransport: nodemailer.Transporter<SMTPTransport.SentMessageInfo>;
+  constructor(private readonly configService: ConfigService) {
     this.smtpTransport = nodemailer.createTransport({
       host: this.configService.get<string>('SMTP_HOST'),
       port: this.configService.get<number>('SMTP_PORT' ?? 547),
@@ -20,12 +18,12 @@ export class MailService {
         pass: this.configService.get<string>('SMTP_PASS'),
       },
       logger: true,
-      debug: true
+      debug: true,
     });
   }
 
   async sendMail(options: Mail.Options) {
-    console.log(options)
+    console.log(options);
     await this.smtpTransport.sendMail(options);
   }
 }

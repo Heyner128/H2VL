@@ -3,9 +3,8 @@ import { WebhookModule } from './webhook/webhook.module';
 import { MailModule } from './mail/mail.module';
 import { ConfigModule } from '@nestjs/config';
 import { configValidationSchema } from './config.schema';
-import {ServeStaticModule} from "@nestjs/serve-static";
-import { join } from "node:path";
-
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'node:path';
 
 @Module({
   imports: [

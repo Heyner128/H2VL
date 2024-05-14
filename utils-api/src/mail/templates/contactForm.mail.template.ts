@@ -1,8 +1,10 @@
-import mjml2html from "mjml";
-import ContactFormDto from "shared/src/interfaces/contactForm.dto";
+import mjml2html from 'mjml';
+import ContactFormDto from 'shared/src/interfaces/contactForm.dto';
 
-export default function contactFormMailTemplate(contactFormDto: ContactFormDto): string {
-    return mjml2html(`
+export default function contactFormMailTemplate(
+  contactFormDto: ContactFormDto,
+): string {
+  return mjml2html(`
         <mjml>
           <mj-body>
             <mj-section>
