@@ -65,7 +65,7 @@ export default class ArticlePreview extends HTMLElement {
 
     private wrapInAnchorElement(element: HTMLElement): HTMLAnchorElement {
         const wrapper = document.createElement("a");
-        wrapper.href = `${import.meta.env.BASE_URL}/nouveautes/${this.id}`;
+        wrapper.href = `${import.meta.env.SITE + import.meta.env.BASE_URL}nouveautes/${this.id}`;
         wrapper.title = `Voir l'article numéro ${this.id}`;
         wrapper.tabIndex = 0;
 

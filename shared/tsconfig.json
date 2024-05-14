@@ -1,15 +1,10 @@
 {
+  "extends": ["@tsconfig/recommended/tsconfig.json", "../tsconfig-base.json"],
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": ".",
-    "target": "ESNext",
-    "module": "EsNext",
-    "moduleResolution": "Bundler",
-    "strict": true,
-    "esModuleInterop": true,
+    "module": "nodenext",
     "resolveJsonModule": true,
-    "forceConsistentCasingInFileNames": true,
-    "types": ["node"],
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
@@ -17,10 +12,6 @@
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
     "strictBindCallApply": true,
-    "skipLibCheck": true
   },
   "exclude": ["node_modules", "../node_modules/**/*", "dist"],
-  "ts-node": {
-    "esm": true
-  }
 }

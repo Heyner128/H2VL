@@ -10,6 +10,7 @@ async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),
+      { cors: true },
   );
   const port = app.get(ConfigService).get<number>('PORT') ?? 3000;
   await app.listen(port);

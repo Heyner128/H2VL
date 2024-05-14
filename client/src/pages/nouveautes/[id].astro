@@ -1,7 +1,7 @@
 ---
-import fetchApi from '@shared/lib/strapi';
-import type Article from '@shared/interfaces/article';
-import BaseLayout from "../../layout/baseLayout.astro";
+import fetchApi from "../../lib/strapi.ts";
+import type Article from 'shared/src/interfaces/article';
+import BaseLayout from "@/layout/baseLayout.astro";
 import Image from "astro/components/Image.astro";
 import renderMarkdown from "@/lib/markdown";
 

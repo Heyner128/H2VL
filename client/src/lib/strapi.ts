@@ -1,15 +1,7 @@
 import axios from "axios";
 
-declare global {
-  interface ImportMeta {
-    env: {
-      PUBLIC_STRAPI_URL: string;
-      PUBLIC_STRAPI_API_TOKEN: string;
-    }
-  }
-}
 
-const { PUBLIC_STRAPI_URL, PUBLIC_STRAPI_API_TOKEN } =  import.meta.env || process.env;
+const { PUBLIC_STRAPI_URL, PUBLIC_STRAPI_API_TOKEN } =  import.meta.env;
 
 interface Props {
   endpoint: string;

@@ -1,6 +1,6 @@
 ---
-import type Article from "@shared/interfaces/article";
-import fetchApi from "@shared/lib/strapi";
+import type Article from "shared/src/interfaces/article";
+import fetchApi from "@/lib/strapi";
 
 const { type } = Astro.props;
 
@@ -19,9 +19,9 @@ const articles = await fetchApi<Article[]>({
 ---
 
 <script>
-    import fetchApi from "@shared/lib/strapi";
-    import type Article from "@shared/interfaces/article";
-    import type ArticlePreview from "../components/web-components/articlePreview";
+    import fetchApi from "@/lib/strapi";
+    import type Article from "shared/src/interfaces/article";
+    import type ArticlePreview from "@/components/web-components/articlePreview";
 
     let lastScrolledPage = 1;
 

@@ -35,23 +35,23 @@ import CustomInput from "@/components/customInput.astro"
         .querySelector("#main-form")
         ?.addEventListener(
             'submit',
-            function (event)  {
+            async function (event)  {
                 event.preventDefault();
                 const form: HTMLFormElement = event.currentTarget as HTMLFormElement;
                 if(!form.checkValidity()) {
                     const fields: NodeListOf<HTMLInputElement | HTMLTextAreaElement> = document.querySelectorAll("#form-content-wrapper input, textarea");
                     fields.forEach(field => field.setCustomValidity(""));
                 } else {
-                    form.classList.add("hidden");
-                    const submitMessage: HTMLDivElement | null = document.querySelector("#form-submit-element");
+
+                    const submitMessage: HTMLDivElement | null = document.querySelector("#form-submit-message");
                     const submitMessageText: HTMLSpanElement | null = submitMessage?.querySelector("span") ?? null;
-                    const nameInput:HTMLInputElement | null = form.querySelector("input[type=text]");
-                    const emailInput:HTMLInputElement | null = form.querySelector("input[type=email]");
+                    const nameInput:HTMLInputElement | null = form.querySelector(`input[type="text"]`);
+                    const emailInput:HTMLInputElement | null = form.querySelector(`input[type="email"]`);
                     const messageTextArea: HTMLTextAreaElement | null = form.querySelector("textarea");
                     if(submitMessageText !== null && submitMessage !== null && nameInput !== null && emailInput !== null && messageTextArea !== null) {
                         try {
-                            axios.post(
-                                `${import.meta.env.PUBLIC_UTILS_API_URL}/contact-mail`,
+                            await axios.post(
+                                `${import.meta.env.PUBLIC_UTILS_API_URL}/mail/contact-form`,
                                 {
                                     name: nameInput.value,
                                     email: emailInput.value,
@@ -64,11 +64,13 @@ import CustomInput from "@/components/customInput.astro"
                             submitMessageText
                                 .textContent = `Erreur  d'envoi, ressayez plus tard`;
                         } finally {
+                            form.classList.add("hidden");
                             submitMessage
                                 .classList
                                 .remove("hidden");
                         }
                     }
+
                 }
             }
         )

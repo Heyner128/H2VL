@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "paths": {
+      "client": ["client/src"],
+      "cms": ["cms/src"],
+      "utils-api": ["utils-api/src"],
+      "shared": ["shared/src"]
+    }
+  }
+}

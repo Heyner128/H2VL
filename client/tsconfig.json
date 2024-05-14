@@ -1,12 +1,15 @@
 {
-  "extends": "astro/tsconfigs/strict",
+  "extends": ["../tsconfig-base.json","astro/tsconfigs/strict"],
   "exclude": ["./dist/*", "./public/*"],
+  "references": [
+    {
+      "path": "../shared"
+    }
+  ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@strapi-types": ["../cms/types/generated/contentTypes.d.ts"],
-      "@/*": ["./src/*"],
-      "@shared/*": ["../shared/*"]
+      "@/*": ["./src/*"]
     },
     "esModuleInterop": true
   }
