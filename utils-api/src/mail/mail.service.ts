@@ -17,13 +17,11 @@ export class MailService {
         user: this.configService.get<string>('SMTP_USER'),
         pass: this.configService.get<string>('SMTP_PASS'),
       },
-      logger: true,
-      debug: true,
+      connectionTimeout: 8000
     });
   }
 
   async sendMail(options: Mail.Options) {
-    console.log(options);
     await this.smtpTransport.sendMail(options);
   }
 }

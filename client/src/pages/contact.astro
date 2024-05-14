@@ -48,8 +48,17 @@ import CustomInput from "@/components/customInput.astro"
                     const nameInput:HTMLInputElement | null = form.querySelector(`input[type="text"]`);
                     const emailInput:HTMLInputElement | null = form.querySelector(`input[type="email"]`);
                     const messageTextArea: HTMLTextAreaElement | null = form.querySelector("textarea");
-                    if(submitMessageText !== null && submitMessage !== null && nameInput !== null && emailInput !== null && messageTextArea !== null) {
+                    const submitButton: HTMLButtonElement | null = form.querySelector(`button[type="submit"]`);
+                    if(
+                        submitMessageText !== null &&
+                        submitMessage !== null &&
+                        nameInput !== null &&
+                        emailInput !== null &&
+                        submitButton !== null &&
+                        messageTextArea !== null
+                    ) {
                         try {
+                            submitButton.disabled = true;
                             await axios.post(
                                 `${import.meta.env.PUBLIC_UTILS_API_URL}/mail/contact-form`,
                                 {
@@ -65,6 +74,7 @@ import CustomInput from "@/components/customInput.astro"
                                 .textContent = `Erreur  d'envoi, ressayez plus tard`;
                         } finally {
                             form.classList.add("hidden");
+                            submitButton.disabled = false;
                             submitMessage
                                 .classList
                                 .remove("hidden");
