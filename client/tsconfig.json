@@ -1,11 +1,6 @@
 {
-  "extends": ["../tsconfig-base.json","astro/tsconfigs/strict"],
+  "extends": "astro/tsconfigs/strict",
   "exclude": ["./dist/*", "./public/*"],
-  "references": [
-    {
-      "path": "../shared"
-    }
-  ],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

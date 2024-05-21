@@ -11,4 +11,7 @@ export const configValidationSchema = Joi.object({
   SMTP_PORT: Joi.number(),
   SMTP_USER: Joi.string().required(),
   SMTP_PASS: Joi.string().required(),
+  DATABASE_FILENAME: Joi.string().required(),
+  PUBLIC_STRAPI_URL: Joi.string().uri().required(),
+  PUBLIC_STRAPI_API_TOKEN: Joi.string().required(),
 });

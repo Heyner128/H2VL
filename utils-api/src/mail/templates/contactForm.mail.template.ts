@@ -1,5 +1,5 @@
 import mjml2html from 'mjml';
-import ContactFormDto from 'shared/src/interfaces/contactForm.dto';
+import ContactFormDto from '../../interfaces/contactForm.dto';
 
 export default function contactFormMailTemplate(
   contactFormDto: ContactFormDto,
@@ -14,19 +14,19 @@ export default function contactFormMailTemplate(
         
                 <mj-divider border-color="#6189E0"></mj-divider>
                 
-                <mj-text font-size="20px" font-family="helvetica">Un nouveau message vient d&apos;arriver sur la page de contact:</mj-text>
+                <mj-text font-size="15px" font-family="helvetica">Un nouveau message vient d&apos;arriver sur la page de contact:</mj-text>
                 
-                <mj-text align="center" font-size="20px" font-family="helvetica">
+                <mj-text align="center" font-size="15px" font-family="helvetica">
                   <strong>Nom:</strong>
                   <span>${contactFormDto.name}</span>
                 </mj-text>
                 
-                <mj-text align="center" font-size="20px" font-family="helvetica">
+                <mj-text align="center" font-size="15px" font-family="helvetica">
                   <strong>Email:</strong>
                   <span>${contactFormDto.email}</span>
                 </mj-text>
                 
-                <mj-text align="center" font-size="20px" font-family="helvetica">
+                <mj-text align="center" font-size="15px" font-family="helvetica">
                   <strong>Message:</strong>
                   <p>${contactFormDto.message}</p>
                 </mj-text>

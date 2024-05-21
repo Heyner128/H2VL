@@ -6,16 +6,16 @@ interface Props {
 }
 
 export default async function fetchApi<T>({
-    endpoint,
-    query,
-    wrappedByKey,
-    wrappedByList,
+  endpoint,
+  query,
+  wrappedByKey,
+  wrappedByList,
 }: Props): Promise<T> {
     if (endpoint.startsWith("/")) {
         endpoint = endpoint.slice(1);
     }
 
-    const url = new URL(`${import.meta.env.PUBLIC_STRAPI_URL}/api/${endpoint}`);
+    const url = new URL(`${process.env.PUBLIC_STRAPI_URL}/api/${endpoint}`);
 
     if (query) {
         Object.entries(query).forEach(([key, value]) => {
@@ -27,7 +27,7 @@ export default async function fetchApi<T>({
 
     const res = await axios.get(url.toString(), {
         headers: {
-            Authorization: `Bearer ${import.meta.env.PUBLIC_STRAPI_API_TOKEN}`,
+            Authorization: `Bearer ${process.env.PUBLIC_STRAPI_API_TOKEN}`,
         },
     });
     let data = res.data;
