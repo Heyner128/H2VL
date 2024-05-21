@@ -5,19 +5,19 @@ export default interface Article {
     contenu: string;
     description: string;
     createdAt: string;
-    "type_d_article": {
+    type_d_article: {
       data: {
         attributes: {
-          value: string
-        }
-      }
-    }
+          value: string;
+        };
+      };
+    };
     image: {
       data: {
         attributes: {
           url: string;
-        }
-      }
+        };
+      };
     };
-  }
+  };
 }

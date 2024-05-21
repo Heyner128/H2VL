@@ -5,9 +5,9 @@ import { ConfigModule } from '@nestjs/config';
 import { configValidationSchema } from './config.schema';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'node:path';
-import {TypeOrmModule} from "@nestjs/typeorm";
-import NewsletterSubscriber from "./mail/models/newsletterSubscriber.model";
-import {ScheduleModule} from "@nestjs/schedule";
+import { TypeOrmModule } from '@nestjs/typeorm';
+import NewsletterSubscriber from './mail/models/newsletterSubscriber.model';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [

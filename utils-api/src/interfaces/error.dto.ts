@@ -1,4 +1,4 @@
 export default interface ErrorDto {
-    message: string;
-    uuid: string;
+  message: string;
+  uuid: string;
 }
