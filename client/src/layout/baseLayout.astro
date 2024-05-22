@@ -31,23 +31,55 @@ const { title }  = Astro.props || {};
 
 
 <script>
+    import axios from "axios";
 
     document
         .querySelector("#newsletter-form")
         ?.addEventListener(
             'submit',
-            function (event)  {
+            async function (event)  {
                 event.preventDefault();
                 const formElement: HTMLFormElement = event.currentTarget as HTMLFormElement;
                 if(!formElement.checkValidity()) {
                     const fields: NodeListOf<HTMLInputElement | HTMLTextAreaElement> = document.querySelectorAll("#newsletter-form input, textarea");
                     fields.forEach(field => field.setCustomValidity(""));
                 } else {
-                   formElement.classList.add("hidden");
-                    document
-                        .querySelector("#newsletter-form-submit-message")
-                        ?.classList
-                        .remove("hidden")
+                    formElement.classList.add("hidden");
+                    const submitMessage: HTMLElement | null = document.querySelector("#newsletter-form-submit-message");
+                    const submitMessageText: HTMLSpanElement | null = submitMessage?.querySelector("span") ?? null;
+                    const nameInput:HTMLInputElement | null = formElement.querySelector(`input[type="text"]`);
+                    const emailInput:HTMLInputElement | null = formElement.querySelector(`input[type="email"]`);
+                    const submitButton: HTMLButtonElement | null = formElement.querySelector(`button[type="submit"]`);
+
+                    if(
+                        submitMessageText !== null &&
+                        submitMessage !== null &&
+                        nameInput !== null &&
+                        emailInput !== null &&
+                        submitButton !== null
+                    ) {
+                        try {
+                            submitButton.disabled = true;
+                            await axios.post(
+                                `${import.meta.env.PUBLIC_UTILS_API_URL}/mail/newsletter-subscribe`,
+                                {
+                                    name: nameInput.value,
+                                    email: emailInput.value
+                                }
+                            );
+                            submitMessageText
+                                .textContent = 'Merci pour votre abonnement';
+                        } catch {
+                            submitMessageText
+                                .textContent = `Erreur, ressayez plus tard`;
+                        } finally {
+                            formElement.classList.add("hidden");
+                            submitButton.disabled = false;
+                            submitMessage
+                                .classList
+                                .remove("hidden");
+                        }
+                    }
                 }
             }
         )
@@ -110,7 +142,7 @@ const { title }  = Astro.props || {};
 
                     </form>
                     <div id="newsletter-form-submit-message" class="hidden flex flex-col gap-5">
-                        <span class="text-center">Merci pour votre abonnement</span>
+                        <span class="text-center" />
                         <button type="reset" id="back-newsletter-form-button" class="bg-gradient-to-r from-blue-500 to-blue-400 hover:bg-gradient-to-r hover:from-blue-600 hover:to-blue-500 text-white font-bold self-center rounded-full px-3 py-0.5 max-md:text-sm">Retour</button>
                     </div>
                     <Image

@@ -1,5 +1,5 @@
 import mjml2html from 'mjml';
-import ContactFormDto from '../../interfaces/contactForm.dto';
+import ContactFormDto from '../../dto/contactForm.dto';
 
 export default function contactFormMailTemplate(
   contactFormDto: ContactFormDto,
@@ -9,8 +9,11 @@ export default function contactFormMailTemplate(
           <mj-body>
             <mj-section>
               <mj-column>
-        
-                <mj-image width="100px" src=${`${process.env.HOSTNAME_URL}/static/logo.png`}></mj-image>
+                <mj-image 
+                    width="100px" 
+                    src=${`${process.env.HOSTNAME_URL}/static/logo.png`}
+                    alt="logo"
+                ></mj-image>
         
                 <mj-divider border-color="#6189E0"></mj-divider>
                 

@@ -14,4 +14,5 @@ export const configValidationSchema = Joi.object({
   DATABASE_FILENAME: Joi.string().required(),
   PUBLIC_STRAPI_URL: Joi.string().uri().required(),
   PUBLIC_STRAPI_API_TOKEN: Joi.string().required(),
+  PUBLIC_CLIENT_URL: Joi.string().uri().required(),
 });

@@ -42,8 +42,8 @@ export class MailService {
     );
   }
 
-  async unsubscribeFromNewsletter(newsletterSubscriber: NewsletterSubscriber) {
-    await this.newsletterSubscriberRepository.remove(newsletterSubscriber);
+  async unsubscribeFromNewsletter(email: string) {
+    await this.newsletterSubscriberRepository.delete({email});
   }
 
   @Cron(CronExpression.EVERY_1ST_DAY_OF_MONTH_AT_NOON)
@@ -66,7 +66,7 @@ export class MailService {
         from: `H2VL <${this.configService.get<string>('MAIL_SENDER')}>`,
         to: [subscriber.email],
         subject: `[Newsletter] Voici les dernières actualités et événements`,
-        html: newsletterMailTemplate(articles),
+        html: newsletterMailTemplate(articles, subscriber.email),
       });
     });
   }

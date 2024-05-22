@@ -14,7 +14,7 @@ export default class NewsletterSubscriber {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
