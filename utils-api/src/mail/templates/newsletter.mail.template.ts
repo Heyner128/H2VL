@@ -2,7 +2,10 @@ import mjml2html from 'mjml';
 import Article from '../../interfaces/article';
 import * as process from 'node:process';
 
-export default function newsletterMailTemplate(articles: Article[], email: string): string {
+export default function newsletterMailTemplate(
+  articles: Article[],
+  email: string,
+): string {
   return mjml2html(`
         <mjml>
             <mj-body>

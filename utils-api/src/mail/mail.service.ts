@@ -43,7 +43,7 @@ export class MailService {
   }
 
   async unsubscribeFromNewsletter(email: string) {
-    await this.newsletterSubscriberRepository.delete({email});
+    await this.newsletterSubscriberRepository.delete({ email });
   }
 
   @Cron(CronExpression.EVERY_1ST_DAY_OF_MONTH_AT_NOON)

@@ -1,11 +1,11 @@
-import {Body, Controller, Post, Res, Delete, Param} from '@nestjs/common';
+import { Body, Controller, Post, Res, Delete, Param } from '@nestjs/common';
 import { MailService } from './mail.service';
 import ContactFormDto from '../dto/contactForm.dto';
 import { ConfigService } from '@nestjs/config';
 import type { FastifyReply } from 'fastify';
 import contactFormMailTemplate from './templates/contactForm.mail.template';
-import NewsletterSubscriberDto from "../dto/newsletterSubscriber.dto";
-import NewsletterSubscriber from "./models/newsletterSubscriber.model";
+import NewsletterSubscriberDto from '../dto/newsletterSubscriber.dto';
+import NewsletterSubscriber from './models/newsletterSubscriber.model';
 
 @Controller('mail')
 export class MailController {
@@ -31,24 +31,22 @@ export class MailController {
 
   @Post('newsletter-subscribe')
   async subscribeToNewsletter(
-      @Body() requestBody: NewsletterSubscriberDto,
-      @Res() res: FastifyReply
+    @Body() requestBody: NewsletterSubscriberDto,
+    @Res() res: FastifyReply,
   ) {
     const newSubscriber: NewsletterSubscriber = new NewsletterSubscriber();
     newSubscriber.name = requestBody.name;
     newSubscriber.email = requestBody.email;
     newSubscriber.subscribeDate = new Date();
-    await this.mailService.subscribeToNewsletter(
-        newSubscriber
-    );
+    await this.mailService.subscribeToNewsletter(newSubscriber);
     await this.mailService.sendNewsletter();
     res.status(204).send();
   }
 
   @Delete('newsletter-unsubscribe/:email')
   async unsubscribeFromNewsletter(
-      @Param('email') email: string,
-      @Res() res: FastifyReply
+    @Param('email') email: string,
+    @Res() res: FastifyReply,
   ) {
     await this.mailService.unsubscribeFromNewsletter(email);
     res.status(204).send();
