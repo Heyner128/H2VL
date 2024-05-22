@@ -11,6 +11,8 @@ const articleTypes: string[] = await fetchApi<ArticleType[]>({
     },
     wrappedByKey: 'data',
 }).then(articleTypes => articleTypes.map(at  => at.attributes.value));
+
+console.log(import.meta.env.SITE, Astro.url.href);
 ---
 <script>
     const navMenuClickHandler = (event: Event) => {

@@ -38,6 +38,7 @@ export class MailController {
     newSubscriber.name = requestBody.name;
     newSubscriber.email = requestBody.email;
     newSubscriber.subscribeDate = new Date();
+    await this.mailService.subscribeToNewsletter(newSubscriber);
     res.status(204).send();
   }
 
