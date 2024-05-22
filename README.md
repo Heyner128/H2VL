@@ -17,7 +17,7 @@ The H2VL.fr site is composed of three main components: an API to manage mails, a
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/h2vl.git
+   git clone https://github.com/heyner128/h2vl.git
    cd h2vl
    ```
 
@@ -76,48 +76,27 @@ Each workspace requires an `.env` file for configuration. An example environment
 
 ## PM2 Configuration
 
-We use PM2 to manage our processes in production. The configuration file is located at the root of the repository and is named `pm2.config.js`. To start the application using PM2, run:
+It includes a PM2 to manage the processes in production. The configuration file is located at the root of the repository and is named `pm2.config.js`. To start the application using PM2, run:
 
-```bash
-pm2 start pm2.config.js
-```
+- **CMS Workspace:**
+  ```bash
+  pm2 start "H2VL cms"
+  ```
 
-### PM2 Configuration File: `pm2.config.js`
+- **Client Workspace:**
+  ```bash
+  pm2 restart "H2VL client"
+  ```
 
-```javascript
-module.exports = {
-  apps: [
-    {
-      name: 'H2VL-CMS',
-      script: 'npm',
-      args: 'start --workspace=cms',
-      env: {
-        NODE_ENV: 'production',
-      },
-    },
-    {
-      name: 'H2VL-Client',
-      script: 'npm',
-      args: 'start --workspace=client',
-      env: {
-        NODE_ENV: 'production',
-      },
-    },
-    {
-      name: 'H2VL-Utils-API',
-      script: 'npm',
-      args: 'start --workspace=utils-api',
-      env: {
-        NODE_ENV: 'production',
-      },
-    },
-  ],
-};
-```
+- **Utils-API Workspace:**
+  ```bash
+  pm2 restart "H2VL utils api"
+  ```
+
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
 
 ---
 
